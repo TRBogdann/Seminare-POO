@@ -92,7 +92,7 @@ bool Checker::checkDots(char *str)
     if(str[i]=='.')
     {
         if(checking){
-            //Alex
+            //Alex --
             // daca asta e adevarat => si checkDecimals e adevarat automat
             //checkDecimals(str) = true;
             //de asta am comentat checkDecimals, e degeaba pt ca asta deja verifica
@@ -127,7 +127,7 @@ bool Checker::checkIfEcuation(char *str){
     int i=0;
     while(i<strlen(str))
   {
-    if(strchr("=", str[i])){ //overkill daca verificam daca are caractere, si in caz contrar verificam daca egalitatea data de utilizator merge sau nu??
+    if(strchr("=", str[i])){ //Alex -- overkill daca verificam daca are caractere, si in caz contrar verificam daca egalitatea data de utilizator merge sau nu??
         return 1;
     }
      i++;
@@ -151,6 +151,7 @@ bool Checker::checkIfEcuation(char *str){
 //     }
 // }
 
+//bool Checker::checkSyntax(char *str){} //Alex -- pare deja implementata in checkExpression. Are sens sa facem si aici? 
  char Checker::checkExpression(char *str)
  {
     char type=SIMPLE_EXPRESSION;
