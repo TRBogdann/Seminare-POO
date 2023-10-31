@@ -5,6 +5,7 @@
 #include "calculator.h"
 //#include <iostream>
 #include <cstring>
+#include <iostream>
 
 void Equation::setUnk(char Unk){
     this->Unk=Unk;
@@ -39,13 +40,28 @@ Equation::Equation(const Equation& e){
 }
 
 std::ostream& operator<<(std::ostream& os, const Equation& e){
-    os << e;
+    switch (e.degree)
+    {
+    case 1:
+        os << e.b << "*" << e.Unk << "+(" << e.c << ")="<<e.d<< "  " << e.degree <<"st degree ecuation"; 
+        break;
+    case 2:
+        os << e.a << "*" << e.Unk <<"^2+("<< e.b<<")*"<<e.Unk<<"+(" << e.c << ")="<<e.d<< "  " << e.degree <<"nd degree ecuation";
+        break;
+    default:
+        os<< "SYNTAX_ERROR Unknown degree!!";
+        break;
+    }
     return os;
 }
 
-std::ostream& operator>>(std::ostream& os, const Equation& e){
-    os >> e;
-    return os;
+std::istream& operator>>(std::istream& is, Equation& e){
+    is>>e.degree>>e.Unk;
+    if(e.degree == 2)
+        is>>e.a>>e.b>>e.c>>e.d;
+    if(e.degree == 1)
+        is>>e.b>>e.c>>e.d;
+    return is;
 }
 
 Equation& operator!(const Equation& e){
