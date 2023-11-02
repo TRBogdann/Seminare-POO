@@ -2,13 +2,49 @@
 
 Calculator::Calculator()
 {
-  expression=0; 
+  this->expression=0; 
+  this->last_result=0;
+  this->error_message="";
 }
 
 Calculator::~Calculator()
 {
     if(!expression)
      delete[] expression;
+}
+
+void Calculator::clear()
+{
+  this->expression=0; 
+  this->last_result=0;
+  this->error_message="";
+}
+
+void Calculator::printResult()
+{
+    
+    if(this->error_message!="")
+    {   
+        std::cout<<this->error_message<<'\n';
+        return;
+    }
+
+    std::cout<<"Result: ";
+    std::cout<<this->last_result<<'\n';
+}
+
+void Calculator::loop(char buffer[],int buffer_size)
+{
+    this->clear();
+    while(this->error_message!="Exiting program")
+    {
+        std::cout<<"Read Expression: ";
+        std::cin.getline(buffer,buffer_size);
+        this->setExpr(buffer);
+        this->evalExpr();
+        this->printResult();
+    }
+    this->clear();
 }
 
 double Calculator::string_to_double(char *str,int n)
@@ -46,12 +82,23 @@ double Calculator::evalSeg(char *str,int len,char flag)
     int left_countpsq=0,right_countpsq=0; //counts [] pairs
     int left_countpss=0,right_countpss=0; //counts {} pairs
 
+    bool sign=0;
     int i=0;
 
 
     //Layer1
+    if(str[i]=='-' && !i)
+    {
+        i++;
+        sign=1;
+    }
+
     while(i<len && !Checker::isParanthesis(str[i]) && !(Checker::isOperator(str[i]) && str[i]!='.'))i++;
+    
     if(i==len){
+
+        if(sign) return -string_to_double(str+1,len-1);
+        
         return string_to_double(str,len);
     }
 
@@ -327,7 +374,45 @@ char *Calculator::getExpr()
     return this->expression;
 }
 
-double Calculator::evalExpr()
+void Calculator::evalExpr()
 {
-    return evalSeg(this->expression,strlen(this->expression),0);
+    int type=checker.checkExpression(this->expression);
+
+    switch (type) {
+        case UNKNOWN_SYMBOL:
+            this->error_message="UNKNOWN SYMBOL";
+            break;
+
+        case SYNTAX_ERROR:
+            this->error_message="SYNTAX ERROR";
+            break;
+
+        case DIVISION_BY_ZERO:
+            this->error_message="DIV_0";
+            break;
+
+        case NOT_A_FIRST_OR_SECOND_DEGREE_ECUATION:
+            this->error_message="Incorrect input or input unsupported";
+            break; 
+
+        case EXIT:
+            this->error_message="Exiting program";
+            break;
+
+        default:
+            this->error_message="";
+    }
+
+    if(this->error_message=="")
+        this->last_result=evalSeg(this->expression,strlen(this->expression),0);
+}
+
+std::string Calculator::getErrorMessage()
+{
+    return this->error_message;
+}
+
+double Calculator::getResult()
+{
+    return this->last_result;
 }
