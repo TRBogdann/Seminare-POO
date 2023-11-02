@@ -2,12 +2,13 @@
 
 Calculator::Calculator()
 {
-    
+  expression=0; 
 }
 
 Calculator::~Calculator()
 {
-
+    if(!expression)
+     delete[] expression;
 }
 
 double Calculator::string_to_double(char *str,int n)
@@ -313,9 +314,12 @@ double Calculator::evalSeg(char *str,int len,char flag)
 }
 
 void Calculator::setExpr(char *expr)
-{
+{   
+    if(!expression)delete[] expression;
+
     this->expression=new char[strlen(expr)+1];
     strcpy(this->expression,expr);
+
 }
 
 char *Calculator::getExpr()
