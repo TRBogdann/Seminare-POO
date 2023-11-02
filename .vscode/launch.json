@@ -8,7 +8,7 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/<executable file>",
+            "program": "/home/X/Documents/Seminar POO/Proiect/program",
             "args": [],
             "cwd": "${workspaceFolder}"
         }

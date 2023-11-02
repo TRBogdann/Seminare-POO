@@ -19,6 +19,10 @@ Checker();
 static bool checkExit(char *str);
 static bool checkDivZero(char *str);
 static bool checkDots(char *str);
+static bool isOperator(char c);
+static bool isParanthesis(char c);
+static bool isLeftParanthesis(char c);
+static bool isRightParanthesis(char c);
 //static bool checkCharacters(char *str);
 //static bool checkDivZero(char *str);
 //static bool checkDecimals(char *str);
@@ -26,8 +30,5 @@ static bool checkDots(char *str);
 //static bool checkIfEcuation(char *str);
 char checkExpression(char *str);
 private:
-static bool isOperator(char c);
-static bool isParanthesis(char c);
-static bool isLeftParanthesis(char c);
-static bool isRightParanthesis(char c);
+
 };
