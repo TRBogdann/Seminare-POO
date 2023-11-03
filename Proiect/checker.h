@@ -8,6 +8,7 @@
 #define DIVISION_BY_ZERO 4 //done
 
 //types
+#define ECUATION 6
 #define FIRST_GRADE_ECUATION 7 //not done
 #define SECOND_GRADE_ECUATION 8 //not done
 #define SIMPLE_EXPRESSION 9 //not done

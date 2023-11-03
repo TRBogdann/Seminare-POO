@@ -29,6 +29,8 @@ void Calculator::clear()
 
 void Calculator::setExpr(char* expr)
 {
+    remove_spaces(expr);
+    
     if(this->expression)
     {
         delete[] this->expression;
@@ -40,6 +42,17 @@ void Calculator::setExpr(char* expr)
 
 }
 
+void Calculator::remove_spaces(char *str)
+{
+    int i=0;
+    while(i<strlen(str))
+    {
+        if(str[i]==' ')
+            strcpy(str+i,str+i+1);
+
+        else i++;
+    }
+}
 
 std::ostream& operator<<(std::ostream& os, const Calculator& c){
     os << c.expression;
@@ -51,6 +64,24 @@ std::istream& operator>>(std::istream& is, Calculator& c){
     return is;
 }
 
+int Calculator::getPrecision()
+{
+    int count=0;
+    int count_zero=0;
+    double aux=this->last_result;
+
+    while(count<6 && int(aux)!=aux){
+        aux*=10.0f;
+        if(int(aux)%10==0)count_zero++;
+        count++;
+    }
+
+    if(count_zero==6)return 0;
+
+    return count;
+
+};
+
 void Calculator::printResult()
 {
     
@@ -61,7 +92,9 @@ void Calculator::printResult()
     }
 
     std::cout<<"Result: ";
-    std::cout<<this->last_result<<'\n';
+    int precision=getPrecision();
+    std::cout << std::fixed;
+    std::cout<<std::setprecision(precision)<<this->last_result<<'\n';
 }
 
 void Calculator::loop(char buffer[],int buffer_size)
@@ -418,6 +451,10 @@ void Calculator::evalExpr()
         
         case DIVISION_BY_ZERO:
             this->error_message="DIV_0";
+            break;
+        
+        case ECUATION:
+            this->error_message="Can t solve ecuations yet";
             break;
         
         default:

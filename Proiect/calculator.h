@@ -3,6 +3,7 @@
 #include "checker.h"
 #include <cstring>
 #include <iostream>
+#include <iomanip>
 
 class Calculator{
 public:
@@ -32,8 +33,9 @@ Checker checker;
 char *expression;
 double last_result;
 std::string error_message;
+int getPrecision();
 double evalSeg(char *str,int len,char flag);
 double string_to_double(char *str,int len);
-
+void remove_spaces(char*str);
 
 };

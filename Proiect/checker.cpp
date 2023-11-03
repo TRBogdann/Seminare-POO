@@ -130,7 +130,7 @@ bool Checker::checkCharacters(char *str){
     {
         if(!isLeftParanthesis(str[i]) && !isRightParanthesis(str[i]) && !isOperator(str[i])) 
         {
-            if('A' <= str[i] <= 'Z' || 'a' <= str[i] <= 'a' ) return 1;
+            if(('A' <= str[i] && str[i] <= 'Z') || ('a' <= str[i] && str[i] <= 'z' )) return 1;
         }
         i++;
     }
@@ -171,7 +171,8 @@ bool Checker::checkIfEcuation(char *str){
  char Checker::checkExpression(char *str)
  {
     char type=SIMPLE_EXPRESSION;
-
+    bool found_x=0;
+    int count_equals=0;
     int left_countpr=0,right_countpr=0;  //counts () pairs
     int left_countpsq=0,right_countpsq=0; //counts [] pairs
     int left_countpss=0,right_countpss=0; //counts {} pairs
@@ -181,7 +182,7 @@ bool Checker::checkIfEcuation(char *str){
 
 
    if(!(str[0]>='0' && str[0]<='9') && str[0]!='(' &&  str[0]!='[' 
-        && str[0]!='{' && str[0]!='x' && str[0]!='-' && str[0]!='+' && str[0]!=' ')
+        && str[0]!='{' && str[0]!='x' && str[0]!='-' && str[0]!=' ')
          {
             if(isOperator(str[0]) || isParanthesis(str[0])) 
                 return SYNTAX_ERROR;
@@ -193,27 +194,30 @@ bool Checker::checkIfEcuation(char *str){
     if(str[0]=='(')left_countpr++;
     if(str[0]=='[')left_countpsq++;
     if(str[0]=='{')left_countpss++;
+    if(str[0]=='x')type=ECUATION;
 
     for(int i=1;i<strlen(str);i++)
     {
-        if(str[i]!=' ')
-        {
-        if(str[i]>='a' && str[i]<='z'){
+      
+        if((str[i]>='a' && str[i]<='z')){
             if(str[i]=='x')
             {       
                     if(str[i-1]>='0' && str[i-1]<='9')return SYNTAX_ERROR;
                     if(str[i-1]=='x')return SYNTAX_ERROR;
                     if(str[i-1]=='.')return SYNTAX_ERROR;
-                    if(str[0]==')')return SYNTAX_ERROR;
-                    if(str[0]==']')return SYNTAX_ERROR;
-                    if(str[0]=='}')return SYNTAX_ERROR;
+                    if(str[i-1]==')')return SYNTAX_ERROR;
+                    if(str[i-1]==']')return SYNTAX_ERROR;
+                    if(str[i-1]=='}')return SYNTAX_ERROR;
+                    type=ECUATION;
+                    found_x=1;
             }
 
-            return UNKNOWN_SYMBOL;
+            else    
+                return UNKNOWN_SYMBOL;
         }
         else 
             if(str[i]<'0' || str[i]>'9')
-                if(!isOperator(str[i]) && !isParanthesis(str[i]))
+                if(!isOperator(str[i]) && !isParanthesis(str[i]) && str[i]!='=')
                     return UNKNOWN_SYMBOL;
 
         if(isOperator(str[i]) && isOperator(str[i-1])) return SYNTAX_ERROR;
@@ -231,11 +235,24 @@ bool Checker::checkIfEcuation(char *str){
         if(str[i]==')')right_countpr++;
         if(str[i]==']')right_countpsq++;
         if(str[i]=='}')right_countpss++;
-    }
+
+        if(str[i]=='='){
+            count_equals++;
+            type=ECUATION;
+        }
+  
 
     }
 
 
+    if(found_x && !count_equals)
+        return SYNTAX_ERROR;
+
+    if(count_equals>0 && found_x==0)
+        return SYNTAX_ERROR;
+
+    if(count_equals>1)
+        return SYNTAX_ERROR;
 
     if(left_countpr!=right_countpr)
     {
