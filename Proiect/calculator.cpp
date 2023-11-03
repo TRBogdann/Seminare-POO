@@ -80,13 +80,13 @@ int Calculator::getPrecision()
     int count_zero=0;
     double aux=this->last_result;
 
-    while(count<6 && int(aux)!=aux){
+    while(count<4 && int(aux)!=aux){
         aux*=10.0f;
         if(int(aux)%10==0)count_zero++;
         count++;
     }
 
-    if(count_zero==6)return 0;
+    if(count_zero==4)return 0;
 
     return count;
 
