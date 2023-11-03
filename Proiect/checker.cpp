@@ -13,6 +13,20 @@ Checker::~Checker()
 
 }
 
+Checker::Checker(int ch){
+    std::cout<<ch<<std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Checker& ch){
+    os << "<< Overload pt clasa Checker";
+    return os;
+}
+
+std::istream& operator>>(std::istream& is, Checker& ch){
+    
+    return is;
+}
+
  bool Checker::checkExit(char *str)
 {
   if(strlen(str)==0)
@@ -91,7 +105,13 @@ bool Checker::checkDots(char *str)
 
     if(str[i]=='.')
     {
-        if(checking)return 1;
+        if(checking){
+            //Alex --
+            // daca asta e adevarat => si checkDecimals e adevarat automat
+            //checkDecimals(str) = true;
+            //de asta am comentat checkDecimals, e degeaba pt ca asta deja verifica
+            return 1;
+        }
         checking=1;
     }
 
@@ -104,7 +124,48 @@ bool Checker::checkDots(char *str)
     return 0;
 }
 
+bool Checker::checkCharacters(char *str){
+    int i=0;
+    while(i<strlen(str))
+    {
+        if(!isLeftParanthesis(str[i]) && !isRightParanthesis(str[i]) && !isOperator(str[i])) 
+        {
+            if('A' <= str[i] <= 'Z' || 'a' <= str[i] <= 'a' ) return 1;
+        }
+        i++;
+    }
+    return 0;
+}
 
+bool Checker::checkIfEcuation(char *str){
+    int i=0;
+    while(i<strlen(str))
+  {
+    if(strchr("=", str[i])){ //Alex -- overkill daca verificam daca are caractere, si in caz contrar verificam daca egalitatea data de utilizator merge sau nu??
+        return 1;
+    }
+     i++;
+  }
+  return 0;
+}
+
+// bool Checker::checkDecimals(char *str){
+//    if(!checkDots(str))
+//     return 0;
+//     else{
+//         int i=0;
+//         bool checking =0;
+//         while(i < strlen(str)){
+//             if(str[i] == '.'){
+//                 if(checking) return 1;
+//                 checking=1;
+//             }
+//             else if(!(str[i]>='0' && str[i]<='9') && checking==1) checking=0;
+//         }
+//     }
+// }
+
+//bool Checker::checkSyntax(char *str){} //Alex -- pare deja implementata in checkExpression. Are sens sa facem si aici? 
 
 
  char Checker::checkExpression(char *str)
