@@ -87,6 +87,30 @@ Checker Calculator::getChecker(){
     return checker;
 }
 
+double Calculator::string_to_double(char *str,int len)
+{
+    double res=0;
+    bool dot=0;
+    int p=10;
+    for(int i=0;i<len;i++)
+    {
+        
+        if(str[i]=='.')dot=1;
+        else
+         {
+            double num=str[i]-'0';
+            if(!dot)
+                res=res*10+num;
+            else
+            {
+                res+=num/p;
+                p*=10;
+            }
+         };
+    }
+    return res;
+};
+
 
 void Calculator::setChecker(Checker check){
     this->checker = check;
@@ -102,11 +126,18 @@ double Calculator::evalSeg(char *str,int len,char flag)
     int left_countpss=0,right_countpss=0; //counts {} pairs
 
     int i=0;
-
+    bool sign=0;
 
     //Layer1
+    if(str[i]=='-' && i==0)
+    {
+        i++;
+        sign=1;
+    }
+
     while(i<len && !Checker::isParanthesis(str[i]) && !(Checker::isOperator(str[i]) && str[i]!='.'))i++;
     if(i==len){
+        if(sign) return -string_to_double(str+1, len-1);
         return string_to_double(str,len);
     }
 

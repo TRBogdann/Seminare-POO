@@ -49,6 +49,7 @@ double math_functions::log(double number) //using mclaurin series
 
 }
 
+
 double math_functions::pow(double base, double power) //using mclaurin series
 {
     
@@ -71,6 +72,11 @@ double res=1;
 
         return res;
     }   
+
+    //error fix
+    if(power>1)  //ex: 123^2.2=123^2*123^0.2
+        return math_functions::pow(base,int(power))*math_functions::pow(base,power-int(power));
+    
 
     power=power*math_functions::log(base); // a ^ x = e ^ (log(a) * x);
     double change=power;

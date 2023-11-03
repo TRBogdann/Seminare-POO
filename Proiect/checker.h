@@ -38,6 +38,7 @@ static bool isOperator(char c);
 static bool isParanthesis(char c);
 static bool isLeftParanthesis(char c);
 static bool isRightParanthesis(char c);
+
 private:
 
 };
