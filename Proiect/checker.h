@@ -34,9 +34,10 @@ static bool checkCharacters(char *str);
 //static bool checkSyntax(char *str);
 static bool checkIfEcuation(char *str);
 char checkExpression(char *str);
-private:
 static bool isOperator(char c);
 static bool isParanthesis(char c);
 static bool isLeftParanthesis(char c);
 static bool isRightParanthesis(char c);
+private:
+
 };
