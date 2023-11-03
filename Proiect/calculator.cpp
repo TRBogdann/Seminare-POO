@@ -27,6 +27,16 @@ void Calculator::clear()
   this->error_message="";
 }
 
+void Calculator::printSegment(char *str,int len)
+{
+    int i=0;
+    while(i<len)
+    {
+        std::cout<<str[i];
+    }
+    std::cout<<'\n';
+}
+
 void Calculator::setExpr(char* expr)
 {
     remove_spaces(expr);
@@ -162,11 +172,13 @@ double Calculator::evalSeg(char *str,int len,char flag)
     bool sign=0;
 
     //Layer1
+    
     if(str[i]=='-' && i==0)
     {
         i++;
         sign=1;
     }
+    
 
     while(i<len && !Checker::isParanthesis(str[i]) && !(Checker::isOperator(str[i]) && str[i]!='.'))i++;
     if(i==len){
@@ -218,11 +230,13 @@ double Calculator::evalSeg(char *str,int len,char flag)
             end=i-1;
             //printSegment(&str[start],end-start+1);
             if(!prev){
+                
                 res+=evalSeg(&str[start],end-start+1,0);
+                
             }
 
             else 
-            switch(str[i])
+            switch(str[start-1])
             {
             case '+':
                 res+=evalSeg(&str[start],end-start+1,0);
@@ -266,7 +280,7 @@ double Calculator::evalSeg(char *str,int len,char flag)
             res+=evalSeg(&str[start],end-start+1,0);
             }
 
-            else switch(str[i])
+            else switch(str[start-2])
             {
             case '+':
                 res+=evalSeg(&str[start],end-start+1,0);

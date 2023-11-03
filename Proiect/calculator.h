@@ -33,6 +33,7 @@ Checker checker;
 char *expression;
 double last_result;
 std::string error_message;
+void printSegment(char* str,int len);
 int getPrecision();
 double evalSeg(char *str,int len,char flag);
 double string_to_double(char *str,int len);
