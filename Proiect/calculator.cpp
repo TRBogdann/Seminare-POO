@@ -154,6 +154,98 @@ double Calculator::string_to_double(char *str,int len)
     return res;
 };
 
+char* Calculator::double_to_string(double number)
+{
+
+    char *str;
+    int len=0;
+    int int_part=int(number);
+    double decimal_part=number-int(number);
+    bool sign=0;
+
+    if(number<0)
+    {
+        len++;
+        sign=1;
+        number=math_functions::abs(number);
+    }
+
+    if(number==0)
+    {
+        char* str=new char[2];
+        str[0]='0';
+        str[1]=0;
+        return str;
+    }
+    
+    
+
+    if(!int_part)len++;
+
+    while(int_part>0)
+    {
+        int_part/=10;
+        len++;
+    }
+
+    int rev=len;
+    
+    
+    if(decimal_part)
+    {
+        len++;
+        int rest=0;
+        int addUp=0;
+        for(int i=0;i<9;i++)
+        {
+            decimal_part*=10;
+            
+            if((int(decimal_part))%10==0)
+            {
+                rest++;
+            }
+            else{
+                addUp++;
+                addUp+=rest;
+                rest=0;
+            }
+        }
+        len+=addUp;
+        
+    }
+
+    str=new char[len+1];
+    int_part=int(number);
+    decimal_part=number-int(number);
+
+    int i=rev;
+    while(i>0)
+    {   
+        str[i-1]=int_part%10+'0';
+        int_part/=10;
+        i--;
+    }
+
+    decimal_part*=10;
+
+    for(i=rev;i<len;i++)
+    {
+        if(i==rev)str[i]='.';
+
+        else{
+            str[i]=int(decimal_part)%10+'0';
+            decimal_part=decimal_part*10;
+        }
+    }
+
+
+
+return str;
+    
+
+    
+}
+
 
 void Calculator::setChecker(Checker check){
     this->checker = check;
@@ -182,6 +274,7 @@ double Calculator::evalSeg(char *str,int len,char flag)
 
     while(i<len && !Checker::isParanthesis(str[i]) && !(Checker::isOperator(str[i]) && str[i]!='.'))i++;
     if(i==len){
+        if(str[0]=='x')return 1;
         if(sign) return -string_to_double(str+1, len-1);
         return string_to_double(str,len);
     }
@@ -218,12 +311,14 @@ double Calculator::evalSeg(char *str,int len,char flag)
     i=0;
     char originalFlag = flag; 
         newFlag = flag + 1;
+    
+    
  
 
     while(i<len)
     {
         
-        if((str[i]==operator1 || str[i]==operator2) && !insideParantethis) 
+        if((str[i]==operator1 || str[i]==operator2) && !insideParantethis && i!=0) 
         {
             if(ignore==0){
             newFlag=originalFlag;

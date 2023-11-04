@@ -33,10 +33,12 @@ Checker checker;
 char *expression;
 double last_result;
 std::string error_message;
+//void modifyEcuation();
 void printSegment(char* str,int len);
 int getPrecision();
 double evalSeg(char *str,int len,char flag);
 double string_to_double(char *str,int len);
+char* double_to_string(double number);
 void remove_spaces(char*str);
 
 };

@@ -244,6 +244,7 @@ bool Checker::checkIfEcuation(char *str){
 
     }
 
+    if(isOperator(str[strlen(str)-1]))return SYNTAX_ERROR;
 
     if(found_x && !count_equals)
         return SYNTAX_ERROR;
