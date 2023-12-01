@@ -1,0 +1,37 @@
+Clase:
+-calculator
+-equation
+-checker
+To do:
+
+1) constructor cu parametri ========> Calculator
+2)constructor de copiere =======>Calculator
+3) verificam daca exista mai mult de o necunoscuta, si daca sunt mai multe si diferite intre ele afisam unknown symbol ======> Checker
+4) de intergrat ecuatiile in calcule  ==========> Calculator zona evalExpr astfel:
+   facem obicet E de tip Ecuatie 
+   Verificam gradul ecuatiei:
+       *GR2
+	-declaram obiect de tip solutii S
+	-luam tot ce merge ca param a si il calculam si trimitem in E.a
+	-luam tot ce intra la b, dupa ce am facut a si trimitem in E.b
+	-luam tot ce a ramas pana in egal, calculam si trimitem in E.c
+	-laum tot ce e dupa egal, calculam si trimitem in E.d
+	-Apelam E.s_degree(); care va salva rezultatele in S
+       *GR1
+	-setam a=0
+	-luam tot ce intra la b, dupa ce am facut a si trimitem in E.b
+	-luam tot ce a ramas pana in egal, calculam si trimitem in E.c
+	-laum tot ce e dupa egal, calculam si trimitem in E.d
+	-Apelam E.f_degree();
+   Trimitem rezultatul inapoi in Calculator evalExpr
+
+
+Idei de viitor:
++- transform param de ecuatie in vector alocat dinamic   ========>Equation
++- desfacere paranteze
+
+
+-Sa poti schimba unk;
+-set ,get, operatori si constructori;
+-calcul;
+-runtime error(calculator si handler);

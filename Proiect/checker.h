@@ -16,6 +16,15 @@
 //commands
 #define EXIT 10 //done
 
+//runtime errors
+#define ZERO_POW_ZERO 11
+#define ZERO_SQRT_ZERO 12
+#define DIV_X 12
+#define POW_X 13
+#define COMPLEX_RESULT 14
+
+
+
 class Checker{
 public:
 //Constructor/Destructor
@@ -26,15 +35,14 @@ Checker(int ch);
 friend std::ostream& operator<<(std::ostream& os, const Checker& ch);
 friend std::istream& operator>>(std::istream& is, Checker& ch);
 //Metode
-static bool checkExit(char *str);
-static bool checkDivZero(char *str);
-static bool checkDots(char *str);
-static bool checkCharacters(char *str);
-//static bool checkDivZero(char *str);
-//static bool checkDecimals(char *str);
-//static bool checkSyntax(char *str);
-static bool checkIfEcuation(char *str);
+bool checkExit(char *str);
+bool checkDivZero(char *str);
+bool checkDots(char *str);
+bool checkIfEcuation(char *str);
+
 char checkExpression(char *str);
+
+static bool checkCharacters(char *str);
 static bool isOperator(char c);
 static bool isParanthesis(char c);
 static bool isLeftParanthesis(char c);

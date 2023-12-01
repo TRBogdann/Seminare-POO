@@ -1,9 +1,9 @@
 exemples 1:
 
-1/((((((0))))))
-((3*2)+1
-3       *2+1
-9.9999999999999999999+1 (prea multe cifre);
+1/((((((0)))))) eroare
+((3*2)+1 eroare
+3       *2+1 acceptat
+9.999999999999999999999999999999+1  acceptat
 
 exemples 2:
 
@@ -11,7 +11,7 @@ exemples 2:
 
 x^[1+(1/x)]=x err (x^x nu se accepta)
 
-1/((8+1)*x+2*3-1)-x=0 prelucrare (se va imultii cu 9x+5)
+1/((8+1)*x+2*3-1)-x=0 /x nu se accepta
 
 2^x+1=x err (a^x a#x nu se accepta)
 

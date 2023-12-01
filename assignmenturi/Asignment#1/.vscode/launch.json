@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/X/Documents/Seminar POO/Proiect",
-      "program": "/home/X/Documents/Seminar POO/Proiect/build/Debug/outDebug",
+      "cwd": "/home/X/Documents/Seminar POO/assignmenturi/Asignment#1",
+      "program": "/home/X/Documents/Seminar POO/assignmenturi/Asignment#1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

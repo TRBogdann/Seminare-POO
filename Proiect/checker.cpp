@@ -1,7 +1,8 @@
-//#define _CRT_SECURE_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS 
 #include "checker.h"
 #include <cstring> 
 #include <iostream>
+
 
 Checker::Checker()
 {
@@ -189,12 +190,15 @@ bool Checker::checkIfEcuation(char *str){
 
             return UNKNOWN_SYMBOL;
          }
-    
-    //if(str[0]=='x')type=0;
+
     if(str[0]=='(')left_countpr++;
     if(str[0]=='[')left_countpsq++;
     if(str[0]=='{')left_countpss++;
-    if(str[0]=='x')type=ECUATION;
+    if(str[0]=='x')
+    {
+        type=ECUATION;
+        found_x=1;
+    }
 
     for(int i=1;i<strlen(str);i++)
     {
@@ -246,7 +250,7 @@ bool Checker::checkIfEcuation(char *str){
 
     if(isOperator(str[strlen(str)-1]))return SYNTAX_ERROR;
 
-    if(found_x && !count_equals)
+    if(found_x && count_equals==0)
         return SYNTAX_ERROR;
 
     if(count_equals>0 && found_x==0)
