@@ -832,3 +832,8 @@ std::istream& operator>>(std::istream &os,EquationHandler& handler)
     delete[] buffer;
     return os;
 }
+
+ char EquationHandler::getUnknown()
+ {
+    return this->unk;
+ }

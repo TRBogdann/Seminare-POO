@@ -36,6 +36,7 @@ class EquationHandler
    int* getParanthesisBuffer(unsigned int number);
    int getSegmentBegining(unsigned int number);
    int getSegmentEnd(unsigned int number);
+   char getUnknown();
 
    private: 
    int updateParanthesisBuffer(char ch,unsigned int number=1);

@@ -3,7 +3,6 @@
 #define EULER_NUMBER 2.71828182846
 #define PI 3.14159265359
 
-#include "equationHandler.h"
 #include <iostream>
 #include <cstring>
 
