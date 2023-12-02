@@ -557,7 +557,7 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
     int right_margin=0;
     bool direction=1;
     bool rev=0;
-
+    std::cout<<equation<<"\n";
     int i=0;
     //First Step
     found=findInnerEquation(equation);
@@ -568,6 +568,7 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
         simplifyEcuation(equation,unk);
         clearBuffer(1);
         clearBuffer(2);
+        std::cout<<equation<<"\n";
         return;
     }
     clearBuffer(1);
@@ -689,7 +690,6 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
     }
     
     if(strlen(temp)>0){
-    std::cout<<temp<<"\n";
     str_functions::printSegment(equation+left_margin,right_margin-left_margin+1);
     str_functions::strReplace(equation,left_margin,right_margin+1,temp);
     

@@ -21,7 +21,14 @@ double str_functions::string_to_double(char *str,int len)
     double res=0;
     bool dot=0;
     int p=10;
-    for(int i=0;i<len;i++)
+    int i=0;
+    while(i<len)
+    {
+        if(!strchr("-01234567890.",str[i]))
+            len=i;
+        i++;
+    }
+    for(i=0;i<len;i++)
     {
         
         if(str[i]=='.')dot=1;
