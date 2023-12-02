@@ -37,6 +37,6 @@ public:
     Equation& operator=(const Equation& e);
 //Alte Metode
     double f_degree();
-    solutii s_degree();
+    solutii s_degree(std::string * error=nullptr);
     //double n_degree(const Equation& e);
 };

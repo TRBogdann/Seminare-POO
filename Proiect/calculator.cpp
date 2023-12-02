@@ -199,11 +199,9 @@ void Calculator::evalExpr()
                     params[2]=handler.getCoeficientOf(0);
                     params[3]=0;
 
-                    std::cout<<" "<<params[0]<<" "<<params[1]<<" "<<
-                    params[2]<<" "<<params[3]<<'\n';
                 }
                 Equation eq(degree,'x',params);
-                this->last_sol=eq.s_degree();
+                this->last_sol=eq.s_degree(&error_message);
             };
     }
 

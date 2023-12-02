@@ -122,10 +122,17 @@ double Equation::f_degree(){
     return ((params[2]-params[3])/params[1]);
 }
 
-solutii Equation::s_degree(){
+solutii Equation::s_degree(std::string* error){
     solutii s;
     double delta, sqrt_delta, pp, dp;
     delta = params[1] * params[1] - 4 * params[0] * (params[2]-params[3]);
+    if(delta<0)
+    {
+        if(error!=nullptr){
+        *error="Ecuatia nu are solutii reale";
+        }
+        return {0.0f,0.0f};
+    }
 	sqrt_delta =math_functions::sqrt(delta, 2.0f);
     pp = (-1)*(params[1]) / (2 * params[0]);
     dp = sqrt_delta/(2 * params[0]);
