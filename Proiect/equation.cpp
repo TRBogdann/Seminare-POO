@@ -119,7 +119,7 @@ Equation& Equation::operator=(const Equation &e){
 }
 
 double Equation::f_degree(){
-    return ((params[2]-params[3])/params[1]);
+    return ((params[3]-params[2])/params[1]);
 }
 
 solutii Equation::s_degree(std::string* error){
@@ -139,4 +139,14 @@ solutii Equation::s_degree(std::string* error){
     s.x1 = pp + dp;
     s.x2 = pp - dp;
     return s;
+}
+
+solutii Equation::getSolutii(std::string* error)
+{
+    if(degree==1)
+    {
+        return{f_degree(),f_degree()};
+    }
+    else 
+    return s_degree(error);
 }

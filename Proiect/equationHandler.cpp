@@ -400,7 +400,11 @@ void EquationHandler::setEquation(char* equation)
     this->rightHandEquation=new char[len-breakPoint+1];
     strcpy(rightHandEquation,equation+breakPoint+1);
 
+    std::cout<<"Steps:\n\n";
+    std::cout<<"Left Hand:\n";
     modifyEcuation(leftHandEquation,unk);
+
+    std::cout<<"\nRight Hand:\n";
     modifyEcuation(rightHandEquation,unk);
 
 }
@@ -565,6 +569,7 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
     {   
         clearBuffer(1);
         clearBuffer(2);
+        str_functions::remove_str(equation,"{}[]()");
         simplifyEcuation(equation,unk);
         clearBuffer(1);
         clearBuffer(2);
@@ -652,6 +657,7 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
             if(contains)end2++;
             left_margin=start1-1;
             right_margin=end2;
+            
         }
         if(equation[this->start2]=='(')
         {
@@ -664,9 +670,11 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
         str_functions::add_to_str(eq1,equation+start1,end1-start1+1);
 
         if(!rev){
-        eq2=new char[end2-start2+2];
+        eq2=new char[end2-start2+10];
         strcpy(eq2,"");
         str_functions::add_to_str(eq2,equation+start2,end2-start2+1);
+        clearBuffer(1);
+        clearBuffer(2);
         multiplyEcuations(res,eq1,eq2);
         }
 
@@ -690,7 +698,7 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
     }
     
     if(strlen(temp)>0){
-    str_functions::printSegment(equation+left_margin,right_margin-left_margin+1);
+    //str_functions::printSegment(equation+left_margin,right_margin-left_margin+1);
     str_functions::strReplace(equation,left_margin,right_margin+1,temp);
     
     delete[] temp;

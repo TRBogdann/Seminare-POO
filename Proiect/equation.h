@@ -36,6 +36,7 @@ public:
     friend Equation operator^(const Equation &e, float y);
     Equation& operator=(const Equation& e);
 //Alte Metode
+    solutii getSolutii(std::string * error=nullptr);
     double f_degree();
     solutii s_degree(std::string * error=nullptr);
     //double n_degree(const Equation& e);

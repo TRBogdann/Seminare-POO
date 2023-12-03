@@ -249,3 +249,23 @@ unsigned int str_functions::findChr(char *str,char ch)
     }
     return pos;
 }
+
+void str_functions::remove_str(char* str,const char* restrict)
+{
+    int len=strlen(str);
+    int i=0;
+    while(i<len)
+    {
+    if(strchr(restrict,str[i]))
+        {
+            for(int j=i;j<len-1;j++)
+            {
+                str[j]=str[j+1];
+            }
+            len--;
+        }
+    else 
+        i++;
+    }
+    str[len]=0;
+}

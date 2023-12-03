@@ -101,7 +101,7 @@ void Calculator::printResult()
     }
 
     std::cout<<"Solutii: \n";
-    if(last_sol.x2==0){
+    if(last_sol.x2==last_sol.x1){
     std::cout<<"x= "<<last_sol.x1<<'\n';
     }
     else{
@@ -186,9 +186,9 @@ void Calculator::evalExpr()
                 double *params=new double[4];
                 if(degree==1)
                 {
-                    params[0]=handler.getCoeficientOf(1);
-                    params[1]=handler.getCoeficientOf(0);
-                    params[2]=0;
+                    params[0]=0;
+                    params[1]=handler.getCoeficientOf(1);
+                    params[2]=handler.getCoeficientOf(0);
                     params[3]=0;
                 }
 
@@ -198,10 +198,16 @@ void Calculator::evalExpr()
                     params[1]=handler.getCoeficientOf(1);
                     params[2]=handler.getCoeficientOf(0);
                     params[3]=0;
-
                 }
+                
+                std::cout<<'\n'
+                    <<"a="<<params[0]<<"\n"
+                    <<"b="<<params[1]<<"\n"
+                    <<"c="<<params[2]<<"\n"
+                    <<"d="<<params[3]<<'\n'
+                    <<'\n';
                 Equation eq(degree,'x',params);
-                this->last_sol=eq.s_degree(&error_message);
+                this->last_sol=eq.getSolutii(&error_message);
             };
     }
 
