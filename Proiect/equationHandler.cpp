@@ -627,6 +627,8 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
             eq1=new char[end1-start1+2];
             strcpy(eq1,"");
             str_functions::add_to_str(eq1,equation+start1,end1-start1+1);
+            clearBuffer(1);
+            clearBuffer(2);
             multiplyEcuations(res,eq1,eq1);
             strcat(temp,res);
             if(!direction)strcat(temp,")");
@@ -681,6 +683,8 @@ void EquationHandler::modifyEcuation(char* &equation,char unk)
         else  {
         double num=1/math_functions::evalSeg(equation+start2,end2-start2+1,0,this->runTimeError);
         eq2=str_functions::double_to_string(num);
+        clearBuffer(1);
+        clearBuffer(2);
         multiplyEcuations(res,eq1,eq2);
         }
 
