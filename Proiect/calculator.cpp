@@ -40,8 +40,7 @@ void Calculator::clear()
 
 void Calculator::setExpr(char* expr)
 {
-    str_functions::remove_spaces(expr);
-    
+    str_functions::remove_spaces(expr,this->_buffer_size);
     if(this->expression)
     {
         delete[] this->expression;

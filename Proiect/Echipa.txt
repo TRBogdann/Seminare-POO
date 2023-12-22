@@ -1,2 +1,5 @@
 Verdes Alex Nicoale
 Trascau Teodor Bogdan
+
+
+[(100000.2*1.12)^(1.23+0.298)]#[(99999/3.3)-(1.9754-4.162673761)] 

@@ -112,6 +112,7 @@ double math_functions::sqrt(double base, double order) //using mclaurin series
 
 double math_functions::evalSeg(char *str,int len,char flag,std::string &error)
 {   
+    
     double res=0;
     double temp;
 
@@ -284,7 +285,7 @@ double math_functions::evalSeg(char *str,int len,char flag,std::string &error)
             case '(':
                 if(ignore==0)
                 {
-                if(i==0 || !(str[i]!=operator1 || str[i]!=operator2))
+                if(!(str[i]!=operator1 || str[i]!=operator2))
                 {
                 ignore=1;
                 start=i+1;
@@ -300,7 +301,7 @@ double math_functions::evalSeg(char *str,int len,char flag,std::string &error)
 
          case '[':
                 if(ignore==0) {
-                    if(i==0 || !(str[i]!=operator1 || str[i]!=operator2))
+                    if(!(str[i]!=operator1 || str[i]!=operator2))
                 {
                 ignore=1;
                 start=i+1;
@@ -315,7 +316,7 @@ double math_functions::evalSeg(char *str,int len,char flag,std::string &error)
 
          case '{':
                 if(ignore==0) {
-                  if(i==0 || !(str[i]!=operator1 || str[i]!=operator2))
+                  if(!(str[i]!=operator1 || str[i]!=operator2))
                 {
                 ignore=1;
                 start=i+1;

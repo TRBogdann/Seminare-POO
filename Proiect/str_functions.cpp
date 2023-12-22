@@ -225,16 +225,23 @@ if(finalEq!=0)
 
 }
 
-void str_functions::remove_spaces(char *str)
+void str_functions::remove_spaces(char *&str,int bufferSize)
 {
-    int i=0;
-    while(i<strlen(str))
+    char* str_res=new char[bufferSize+1];
+    int n=0;
+    for(int i=0;i<strlen(str);i++)
     {
-        if(str[i]==' ')
-            strcpy(str+i,str+i+1);
-
-        else i++;
+        if(str[i]!=' ')
+        {
+            str_res[n]=str[i];
+            n++;
+        }
     }
+
+    strcpy(str,str_res);
+    str[n]=0;
+    delete[] str_res;
+
 }
 
 unsigned int str_functions::findChr(char *str,char ch)
