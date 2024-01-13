@@ -26,6 +26,7 @@ class MeniuPrincipal : public Meniu{
 public:
     MeniuPrincipal();
     void DisplayMenu();
+    void SaveResult() override;
     void ReadInput() override;
     void Inapoi() override;
     int CitireConsola();

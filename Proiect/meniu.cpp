@@ -101,6 +101,11 @@
         }
     }
 
+    void MeniuPrincipal::SaveResult()
+    {
+
+    };
+
     MeniuCitireConsola::MeniuCitireConsola(const MeniuCitireConsola& mcc){
         if(mcc.y != nullptr ){
         y=new char[strlen(mcc.y) + 1];
