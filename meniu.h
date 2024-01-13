@@ -72,9 +72,3 @@ private:
     static char* l;
 }
 
-class AfisareIstorical : public Meniu{
-public:
-    
-private:
-}
-
