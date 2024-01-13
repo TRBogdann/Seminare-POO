@@ -47,6 +47,7 @@ void evalExpr();
 void clear();
 void printResult();
 void loop();
+void loopF2();
 void bindMenu(MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola);
 
 

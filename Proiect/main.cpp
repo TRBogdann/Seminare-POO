@@ -10,7 +10,6 @@ MeniuCitireConsola mc;
 
 bind_objects(c,mp,mc);
 
-mp.DisplayMenu();
 if(argc>1)
 {
     std::cout<<argc<<'\n';
@@ -26,6 +25,7 @@ if(argc>1)
     c.clear();
     }
 }
-c.loop();
+//c.loop();
+c.loopF2();
     return 0;
 }

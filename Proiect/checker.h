@@ -15,6 +15,7 @@
 
 //commands
 #define EXIT 10 //done
+#define RETURN_TO_MENU 15
 
 //runtime errors
 #define ZERO_POW_ZERO 11

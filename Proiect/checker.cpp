@@ -39,9 +39,11 @@ std::istream& operator>>(std::istream& is, Checker& ch){
   if(strlen(str)==4)
     if(strcmp(str,"exit")==0)
         return 1;
-  
+
   return 0;
 }
+
+
 
 bool Checker::isOperator(char c)
 {

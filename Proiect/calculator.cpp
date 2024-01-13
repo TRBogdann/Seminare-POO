@@ -1,3 +1,4 @@
+#include "meniu.h"
 #define _CRT_SECURE_NO_WARNINGS
 #include "checker.h"
 #include "calculator.h"
@@ -87,6 +88,22 @@ int Calculator::getPrecision()
 
     return count;
 
+};
+
+void Calculator::loopF2()
+{
+    // 1.Meniu principal 2.Consola 3.Fisier 4.Executie
+    char selectedLast=1;
+    if(!mc || !mp)
+    {
+     throw "Menu was not bound";
+    }
+    mp->DisplayMenu();
+    mp->ReadInput();
+    while(this->error_message!="Exiting program")
+    {
+
+    }
 };
 
 void Calculator::printResult()
