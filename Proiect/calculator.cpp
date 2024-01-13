@@ -1,3 +1,4 @@
+#include "checker.h"
 #define _CRT_SECURE_NO_WARNINGS
 #include "calculator.h"
 #include "equation.h"
@@ -215,4 +216,63 @@ void Calculator::evalExpr()
     }
 
     lastType=equation;
+}
+
+Calculator::Calculator(const Calculator& c):
+handler(c.handler),_buffer_size(c._buffer_size),
+checker(c.checker),last_result(c.last_result),
+lastType(c.lastType),last_sol(c.last_sol),
+error_message(c.error_message)
+{
+    this->expression=new char[strlen(c.expression)+1];
+    strcpy(this->expression,c.expression);
+};
+
+Calculator& Calculator::operator=(const Calculator& c)
+{
+    this->handler=c.handler;
+    this->_buffer_size=c._buffer_size;
+    this->checker=c.checker;
+    this->lastType=c.lastType;
+    this->historyFile=c.historyFile;
+    this->error_message=c.error_message;
+    this->last_sol=c.last_sol;
+    this->last_result=c.last_result;
+    if(this->expression)
+    {
+        delete[] this->expression;
+        this->expression=0;
+    }
+    this->expression=new char[strlen(c.expression)+1];
+    strcpy(this->expression,c.expression);
+
+    return *this;
+}
+
+solutii Calculator::getSolutii()
+{
+    return this->last_sol;
+}
+char Calculator::getType()
+{
+    return this->lastType;
+}
+int Calculator::getBufferSize()
+{
+    return this->_buffer_size;
+}
+EquationHandler Calculator::getHandler()
+{
+    return this->handler;
+}
+
+void  Calculator::setHandler(EquationHandler _handler)
+{
+    this->handler=_handler;
+}
+
+void Calculator::setBufferSize(int buffer_Size)
+{
+    if(buffer_Size>this->_buffer_size)
+        this->_buffer_size=buffer_Size;
 }

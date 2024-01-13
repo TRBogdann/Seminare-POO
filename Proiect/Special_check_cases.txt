@@ -20,3 +20,4 @@ x^[1+(1/x)]=x err (x^x nu se accepta)
 exemplu Perfect pentru prezentare:
 [x^2+2*(x+3*x+1)+12]*3+4=0
 {{1.23*12^(1+1)+[123.1^2.1]}+1}+1
+

@@ -10,25 +10,26 @@ public:
 //Constructor/ Destructor
 Calculator(unsigned int buffer_size);
 Calculator(char* expression);
-//Calculator(const Calculator&)
-//Calculator(...params)
-// Calculator& operator=(const Calculator&)
+
+Calculator(const Calculator&);
+Calculator& operator=(const Calculator&);
+
 ~Calculator();
 //Getter
 char* getExpr();
 Checker getChecker();
 std::string getErrorMessage();
 double getResult();
+std::string getHistoryFileName();
 
-//solutii getSolutii();
-//char getType();
-//get BufferSize();
-//get Handler();
+solutii getSolutii();
+char getType();
+int getBufferSize();
+EquationHandler getHandler();
 
 //Setteri
-//void setHandler(EquationHandler _handler)
-//void setBufferSize(int buffer_Size)
-// set errorMessage(std::string errorMessage);
+void setHandler(EquationHandler _handler);
+void setBufferSize(int buffer_Size);
 
 
 void setExpr(char *expr);
@@ -37,6 +38,7 @@ void setChecker(Checker checker);
 //Overload
 friend std::ostream& operator<<(std::ostream& os, const Calculator& c);
 friend std::istream& operator>>(std::istream& is, Calculator& c);
+
 //Metode diverse
 void evalExpr();
 void clear();
@@ -52,6 +54,7 @@ double last_result;
 solutii last_sol;
 std::string error_message;
 EquationHandler handler;
+std::string historyFile;
 int getPrecision();
 
 };
