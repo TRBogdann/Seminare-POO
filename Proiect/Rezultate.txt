@@ -1,0 +1,9 @@
+Expresie: 123/4
+Rezultat: 30.75
+
+Expresie: 1+1
+Rezultat: 2
+
+Expresie: 2+3
+Rezultat: 5
+

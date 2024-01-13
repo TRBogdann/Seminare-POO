@@ -6,6 +6,6 @@
                                                                                                      
 
 [MENIU]
-<1> Inserare variabila salvata <1/>
-<2> Cititi Ecuatia <2/>
-<3> Inapoi la MENIU <3/>
+<1> Salvare rezultat in variabila <1/>
+<2> Inapoi la MENIU <2/>
+    

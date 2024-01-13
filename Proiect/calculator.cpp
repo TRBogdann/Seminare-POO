@@ -93,7 +93,7 @@ int Calculator::getPrecision()
 void Calculator::loopF2()
 {
     // 111.Meniu principal 222.Consola 333.Fisier 444.Istoric default ceva
-   int selectedLast=111;
+   int selectedLast=CodMeniuPrincipal;
     if(!mc || !mp)
     {
      throw "Menu was not bound";
@@ -102,29 +102,31 @@ void Calculator::loopF2()
     this->error_message="";
     while(this->error_message!="Exiting program")
     {
+
         switch(selectedLast)
         {
-            case 111:
+            case CodMeniuPrincipal:
             mp->DisplayMenu();
             selectedLast=mp->ReadInput();
                 break;
-
-            case 222:
+                
+            case CodCitireConsola:
             mc->DisplayMenu();
             selectedLast=mc->ReadInput();
                 break;
 
-            case 333:
+            case CodCitireFisier:
                 break;
 
-            case 444:
+            case CodCitireEcuatie:   
                 break; 
 
             default:
-
+                this->error_message="Exiting program";
                 break;
         }
     }
+    this->clear();
 };
 
 void Calculator::printResult()

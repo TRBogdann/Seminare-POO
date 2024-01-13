@@ -1,8 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <stdlib.h> 
 #include <cstring>
 #include <fstream>
 #include "meniu.h"
+#include "calculator.h"
 
 void Meniu::bindCalculator(Calculator &calculator){
         this->calc=&calculator;
@@ -41,7 +43,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-        file.close();
+            file.close();
     }
 
     void MeniuPrincipal::Inapoi(){
@@ -110,7 +112,7 @@ void Meniu::bindCalculator(Calculator &calculator){
                 std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
                 system("CLS");
                 std::cout<<std::flush <<'\n';
-                MeniuPrincipal::ReadInput();
+                return CodMeniuPrincipal;
                 break;
         }
         return 0;
@@ -134,11 +136,11 @@ void Meniu::bindCalculator(Calculator &calculator){
     void MeniuCitireConsola::DisplayMenu(){
         system("CLS");
         std::cout<<std::flush <<'\n';
-        std::ifstream file("MeniuCitireConsola.txt");
+        std::ifstream file("MeniuConsola.txt");
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-        file.close();
+            file.close();
     }
 
 
@@ -152,7 +154,7 @@ void Meniu::bindCalculator(Calculator &calculator){
     int MeniuCitireConsola::ReadInput(){  
         std::cin>>input;
         switch(input[0]){
-            case 'y':
+            case '1':
                 return MeniuCitireConsola::InserareVariabilaVariabilaSalvata();
                 break;   
             case '2':
@@ -165,7 +167,7 @@ void Meniu::bindCalculator(Calculator &calculator){
                 std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
                 system("CLS");
                 std::cout<<std::flush <<'\n';
-                MeniuCitireConsola::ReadInput();
+                return CodMeniuPrincipal;
                 break;
         }
         return 0;
@@ -184,9 +186,7 @@ void Meniu::bindCalculator(Calculator &calculator){
             std::string dn;
             std::cin>>dn;
             if( dn == "da") {
-                //salvam rezultatul in y 
-                
-                //si in l
+                y=str_functions::double_to_string(calc->getResult());
                 if(MeniuCitireFisier::l!=nullptr)
                     delete[] MeniuCitireFisier::l;
                 MeniuCitireFisier::l = new char[strlen(y)+1];
@@ -204,29 +204,87 @@ void Meniu::bindCalculator(Calculator &calculator){
             system("CLS");
             std::cout<<std::flush <<'\n';
             std::cout<<"Scrieti expresia: "<<'\n';
-            std::cout<<y<<' ';
-            //insereaza in ecuatie variabila salvata
-            //calculeaza ecuatia
+            
+        char *buffer=new char[calc->getBufferSize()+1];
+
+        if(y!=nullptr){
+         strcpy(buffer,y);
+         std::cout<<y;
+        }
+        else {
+         strcpy(buffer,"0");
+         std::cout<<'0';
+        }
+
+        std::cin.get();
+        std::cin.getline(buffer+strlen(buffer),calc->getBufferSize()+1-strlen(buffer));
+        calc->setExpr(buffer);
+        calc->evalExpr();
+        calc->printResult();
+
+    delete[] buffer;
             MeniuCitireConsola::SaveResult();
         }
-        if(fc == "fisier"){
-            std::ifstream Rezfile("Rezultate.txt");
-            std::string Rezline;
-            //calculeaza expresia
-            //o pune in fisier pe o linie noua
-            //mai jos afiseaza linia respectiva
-            while (getline(Rezfile, Rezline)) {
-                std::cout << Rezline << std::endl;
+        else {
+            if(fc == "fisier")
+                {
+
+        std::ofstream Rezfile("Rezultate.txt",std::ios::app);
+        std::string Rezline;
+        std::cout<<"Scrieti expresia: "<<'\n';
+  char *buffer=new char[calc->getBufferSize()+1];
+
+        if(y!=nullptr){
+         strcpy(buffer,y);
+         std::cout<<y;
+        }
+        else {
+         strcpy(buffer,"0");
+         std::cout<<'0';
+        }
+
+        std::cin.get();
+        std::cin.getline(buffer+strlen(buffer),calc->getBufferSize()+1-strlen(buffer));;
+        calc->setExpr(buffer);
+        calc->evalExpr();
+        calc->printResult();
+         delete[] buffer;
+        if(calc->getErrorMessage()!="")
+         {
+        if(calc->getErrorMessage()=="Exiting program")
+                return 0;
+        return CodCitireConsola;
+         }
+         Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
+         Rezfile<<"Rezultat: ";
+         if(calc->getType())
+         {
+            if(calc->getSolutii().x1==calc->getSolutii().x2)
+            {
+                Rezfile<<"x="<<calc->getSolutii().x1<<"\n\n";
             }
+            else 
+            {
+                Rezfile<<"x1="<<calc->getSolutii().x1<<' ';
+                Rezfile<<"x2="<<calc->getSolutii().x2<<"\n\n";
+            }
+         }
+         else
+        {
+            Rezfile<<calc->getResult()<<"\n\n";
+        }
+            std::cout<<"Rezultatul a fost adaugat fisierului Rezultate.txt";
+        
 
             // Close the file
             Rezfile.close();
             system("CLS");
             std::cout<<std::flush <<'\n';
             MeniuCitireConsola::SaveResult();
-        }
-        else {
+              }
+            else {
             std::cout<<"\nCalea oferita nu este o optiune. Va rugam incercati din nou."<<std::endl;
+                  }
         }
         return CodCitireConsola;
     }
@@ -235,33 +293,75 @@ void Meniu::bindCalculator(Calculator &calculator){
         system("CLS");
         std::cout<<std::flush <<'\n';
         
-        std::cout<<"Unde afisati rezultatele? (fisier/cosola)"<< '\n';
+        std::cout<<"Unde afisati rezultatele? (fisier/consola)"<< '\n';
         std::string fc;
         std::cin>>fc;
         if( fc == "consola"){
             system("CLS");
             std::cout<<std::flush <<'\n';
             std::cout<<"Scrieti expresia: "<<'\n';
-            //insereaza in ecuatie variabila salvata
-            //calculeaza ecuatia
+    char *buffer=new char[calc->getBufferSize()+1];
+        std::cin.get();
+        std::cin.getline(buffer,calc->getBufferSize()+1);
+        calc->setExpr(buffer);
+        calc->evalExpr();
+        calc->printResult();
+    delete[] buffer;
+    if(calc->getErrorMessage()!="")
+    {
+        if(calc->getErrorMessage()=="Exiting program")
+                return 0;
+        return CodCitireConsola;
+    }
             MeniuCitireConsola::SaveResult();
         }
+        else{
         if(fc == "fisier"){
-            std::ifstream Rezfile("Rezultate.txt");
-            std::string Rezline;
-            system("CLS");
-            std::cout<<std::flush <<'\n';
-            //calculeaza expresia
-            //o pune in fisier pe o linie noua
-            //mai jos afiseaza linia respectiva
-            while (getline(Rezfile, Rezline)) {
-                std::cout << Rezline << std::endl;
+        std::ofstream Rezfile("Rezultate.txt",std::ios::app);
+        std::string Rezline;
+        std::cout<<"Scrieti expresia: "<<'\n';
+        char *buffer=new char[calc->getBufferSize()+1];
+        std::cin.get();
+        std::cin.getline(buffer,calc->getBufferSize()+1);
+        calc->setExpr(buffer);
+        calc->evalExpr();
+        calc->printResult();
+         delete[] buffer;
+        if(calc->getErrorMessage()!="")
+         {
+        if(calc->getErrorMessage()=="Exiting program")
+                return 0;
+        return CodCitireConsola;
+         }
+         Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
+         Rezfile<<"Rezultat: ";
+         if(calc->getType())
+         {
+            if(calc->getSolutii().x1==calc->getSolutii().x2)
+            {
+                Rezfile<<"x="<<calc->getSolutii().x1<<"\n\n";
             }
+            else 
+            {
+                Rezfile<<"x1="<<calc->getSolutii().x1<<' ';
+                Rezfile<<"x2="<<calc->getSolutii().x2<<"\n\n";
+            }
+         }
+         else
+        {
+            Rezfile<<calc->getResult()<<"\n\n";
+        }
+            std::cout<<"Rezultatul a fost adaugat fisierului Rezultate.txt";
+        
+
+            // Close the file
+            Rezfile.close();
             MeniuCitireConsola::SaveResult();
             Rezfile.close();            
         }
         else {
             std::cout<<"Calea oferita nu este o optiune. Va rugam incercati din nou"<<std::endl;
+        }
         }
         return CodCitireConsola;
     }
@@ -283,7 +383,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-        file.close();
+            file.close();
     }
 
     int MeniuCitireFisier::ReadInput(){
@@ -330,11 +430,9 @@ void Meniu::bindCalculator(Calculator &calculator){
             std::cout<<std::flush <<'\n';
             std::ifstream Rezfile("Rezultate.txt");
             std::string Rezline;
-            //calculeaza expresia
-            //o pune in fisier pe o linie noua
-            //mai jos afiseaza linia respectiva
             while (getline(Rezfile, Rezline)) {
                 std::cout << Rezline << std::endl;
+
             }
 
             MeniuCitireFisier::SaveResult();

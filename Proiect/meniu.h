@@ -4,13 +4,20 @@
 #include <cstring>
 #include <string>
 #include <fstream>
-#define CodMeniuPrincipal 111
-#define CodCitireConsola 222
-#define CodCitireFisier 333
-#define CodAfisareIstoric 444 
+
+//folosit la reintoarcerea in meniu
+#define CodMeniuPrincipal 100
+
+#define CodCitireConsola 200
+#define CodCitireEcuatie 210
+
+#define CodCitireFisier 300
+
+#define CodAfisareIstoric 400
+
+
 
 class Calculator;
-
 
 class Meniu{
 public:
@@ -55,8 +62,7 @@ private:
     static char *y;
 
     //!!!!! Verificari dsa nu fie y null. daca e null, ghinion
-}
-
+};
 
 class MeniuCitireFisier : public Meniu{
 public:
@@ -72,6 +78,6 @@ public:
     friend class MeniuCitireConsola;
 private:
     static char* l;
-}
+};
 
 
