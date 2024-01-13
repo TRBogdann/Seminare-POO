@@ -468,7 +468,7 @@ void Meniu::bindCalculator(Calculator &calculator){
          {
         if(calc->getErrorMessage()=="Exiting program")
                 return 0;
-        return CodCitireConsola;
+        return CodCitireFisier;
          }
          Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
          Rezfile<<"Rezultat: ";
