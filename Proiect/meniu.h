@@ -1,8 +1,5 @@
 #pragma once
-#include <iostream>
-#include <stdlib.h> 
-#include <cstring>
-#include <fstream>
+#include <string>
 #define CodMeniuPrincipal 111
 #define CodCitireConsola 222
 #define CodCitireFisier 333

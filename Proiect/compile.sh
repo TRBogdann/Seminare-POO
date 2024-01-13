@@ -1,1 +1,1 @@
-g++ -o program main.cpp math_functions.cpp str_functions.cpp equation.cpp checker.cpp equationHandler.cpp calculator.cpp
+g++ -o program main.cpp math_functions.cpp str_functions.cpp equation.cpp checker.cpp equationHandler.cpp meniu.cpp calculator.cpp

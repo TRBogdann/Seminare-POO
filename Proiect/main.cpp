@@ -1,15 +1,16 @@
 #include "calculator.h"
-#include "meniu.h"
 #include <vector>
 
 int main(int argc, char**argv)
 {
-std::vector<float> v1;
+
 Calculator c(1000);
 MeniuPrincipal mp;
 MeniuCitireConsola mc;
 
 bind_objects(c,mp,mc);
+
+mp.DisplayMenu();
 if(argc>1)
 {
     std::cout<<argc<<'\n';

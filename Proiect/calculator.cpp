@@ -1,6 +1,5 @@
-#include "checker.h"
-#include "meniu.h"
 #define _CRT_SECURE_NO_WARNINGS
+#include "checker.h"
 #include "calculator.h"
 #include "equation.h"
 #include <cstring>
