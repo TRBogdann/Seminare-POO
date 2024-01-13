@@ -32,6 +32,8 @@ void Meniu::bindCalculator(Calculator &calculator){
     
     char* MeniuCitireConsola::y=nullptr;
 
+
+//MENIU PRINCIPAL 
     //-----------------------------------------------------------------------------
 
     void MeniuPrincipal::DisplayMenu(){
@@ -61,11 +63,6 @@ void Meniu::bindCalculator(Calculator &calculator){
                
     };
 
-    int MeniuPrincipal::AfisareIstoric(){
-        system("CLS");
-        std::cout<<std::flush <<'\n';
-        return CodAfisareIstoric;
-    }
 
     void MeniuPrincipal::FeelingLucky(){
         int r= 1 + rand() % 5;
@@ -88,17 +85,17 @@ void Meniu::bindCalculator(Calculator &calculator){
         }
     }
 
-    void MeniuPrincipal::ReadInput(){
+    int MeniuPrincipal::ReadInput(){
         std::cin>>input;
         switch(input[0]){
             case '1':
-                MeniuPrincipal::CitireConsola();
+                return MeniuPrincipal::CitireConsola();
                 break;
             case '2':
-                MeniuPrincipal::CitireFisier();
+                return MeniuPrincipal::CitireFisier();
                 break;   
             case '3':
-                MeniuPrincipal::AfisareIstoric();
+                return MeniuPrincipal::AfisareIstoric();
                 break;
             case '4':
                 MeniuPrincipal::Inapoi();
@@ -116,10 +113,21 @@ void Meniu::bindCalculator(Calculator &calculator){
                 MeniuPrincipal::ReadInput();
                 break;
         }
+        return 0;
     }
 
-
-
+    int MeniuPrincipal::AfisareIstoric(){
+        system("CLS");
+        std::cout<<std::flush <<'\n';
+        std::cout<<"[Afisare Istoric]\n\n<1> Inapoi <1/>\n\n";
+        //afisare din fisierul binar al istoricului
+        int a=0;
+        while(a!=1){
+            std::cin>>a;
+        } 
+        return CodMeniuPrincipal;
+    }
+//MENIU CITIRE CONSOLA
     //------------------------------------------------------------------------
 
     
@@ -141,17 +149,17 @@ void Meniu::bindCalculator(Calculator &calculator){
         }
     }
 
-    void MeniuCitireConsola::ReadInput(){  //scot din asta si citesc ca e deja atribut in clasa abstr.
+    int MeniuCitireConsola::ReadInput(){  //scot din asta si citesc ca e deja atribut in clasa abstr.
         std::cin>>input;
         switch(input[0]){
             case 'y':
-                MeniuCitireConsola::InserareVariabilaVariabilaSalvata();
+                return MeniuCitireConsola::InserareVariabilaVariabilaSalvata();
                 break;   
             case '2':
-                MeniuCitireConsola::Citire();
+                return MeniuCitireConsola::Citire();
                 break;
             case '3':
-                MeniuCitireConsola::InapoiMP();
+                return MeniuCitireConsola::InapoiMP();
                 break;
              default:
                 std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
@@ -160,6 +168,7 @@ void Meniu::bindCalculator(Calculator &calculator){
                 MeniuCitireConsola::ReadInput();
                 break;
         }
+        return 0;
     }
     
 
@@ -175,7 +184,7 @@ void Meniu::bindCalculator(Calculator &calculator){
             std::string dn;
             std::cin>>dn;
             if( dn == "da") {
-                //salvam rezultatul in y   
+                //salvam rezultatul in y si in l
             }
     }
 
@@ -253,6 +262,8 @@ void Meniu::bindCalculator(Calculator &calculator){
     }
 
   
+
+  //MENIU CITIRE FISIER
  //------------------------------------------------------------------------
 
 
@@ -270,14 +281,14 @@ void Meniu::bindCalculator(Calculator &calculator){
         file.close();
     }
 
-    void MeniuCitireFisier::ReadInput(){
+    int MeniuCitireFisier::ReadInput(){
         std::cin>>input;
         switch(input[0]){
             case '1':
-                MeniuCitireFisier::Citire();
+                return MeniuCitireFisier::Citire();
                 break;
             case '2':
-                MeniuCitireFisier::InapoiMP();
+                return MeniuCitireFisier::InapoiMP();
              default:
                 std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
                 system("CLS");
@@ -285,6 +296,7 @@ void Meniu::bindCalculator(Calculator &calculator){
                 MeniuCitireFisier::ReadInput();
                 break;
         }
+        return 0;
     }    
 
     int MeniuCitireFisier::InapoiMP(){ 
@@ -321,7 +333,6 @@ void Meniu::bindCalculator(Calculator &calculator){
             }
 
             MeniuCitireFisier::SaveResult();
-            // Close the file
             Rezfile.close();            
         }
         else {
@@ -336,7 +347,7 @@ void Meniu::bindCalculator(Calculator &calculator){
             std::string dn;
             std::cin>>dn;
             if( dn == "da") {
-                //salvam rezultatul in l  
+                //salvam rezultatul in l si in y 
             }
     }
 
@@ -344,3 +355,6 @@ void Meniu::bindCalculator(Calculator &calculator){
 
     }
 
+
+//END
+//---------------------------------------------------------------------

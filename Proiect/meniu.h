@@ -14,7 +14,7 @@ class Calculator;
 
 class Meniu{
 public:
-    virtual void ReadInput()=0; 
+    virtual int ReadInput()=0; 
     virtual void Inapoi() = 0;
     virtual void SaveResult() = 0;  //aici sa vedem cum facem saveurile
     void bindCalculator(Calculator &calculator);
@@ -27,14 +27,14 @@ class MeniuPrincipal : public Meniu{
 public:
     MeniuPrincipal();
     void DisplayMenu();
-    void ReadInput() override;
+    int ReadInput() override;
     void Inapoi() override;
     int CitireConsola();
     int CitireFisier(); 
-    int AfisareIstoric();
     void FeelingLucky();
     //void HiddenOption();
     void SaveResult() override;
+    int AfisareIstoric();
 };
 
 class MeniuCitireConsola : public Meniu{
@@ -43,7 +43,7 @@ public:
     ~MeniuCitireConsola();
 
     void DisplayMenu();
-    void ReadInput() override;
+    int ReadInput() override;
     int InapoiMP();
     void SaveResult() override;
     int InserareVariabilaVariabilaSalvata();
@@ -63,7 +63,7 @@ public:
     ~MeniuCitireFisier();
 
     void DisplayMenu();
-    void ReadInput() override;
+    int ReadInput() override;
     int InapoiMP();
     void SaveResult() override;
     void Inapoi() override;
@@ -72,9 +72,4 @@ private:
     static char* l;
 }
 
-class AfisareIstorical : public Meniu{
-public:
-    
-private:
-}
 
