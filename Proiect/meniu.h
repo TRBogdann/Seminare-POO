@@ -50,11 +50,12 @@ public:
     char* getY();
     int Citire();
     void Inapoi() override;
+    friend class MeniuCitireFisier;
 private:
     static char *y;
 
     //!!!!! Verificari dsa nu fie y null. daca e null, ghinion
-};
+}
 
 
 class MeniuCitireFisier : public Meniu{
@@ -68,8 +69,9 @@ public:
     void SaveResult() override;
     void Inapoi() override;
     int Citire();
+    friend class MeniuCitireConsola;
 private:
     static char* l;
-};
+}
 
 

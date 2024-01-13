@@ -41,7 +41,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-         file.close();
+        file.close();
     }
 
     void MeniuPrincipal::Inapoi(){
@@ -138,7 +138,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-         file.close();
+        file.close();
     }
 
 
@@ -149,7 +149,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         }
     }
 
-    int MeniuCitireConsola::ReadInput(){  //scot din asta si citesc ca e deja atribut in clasa abstr.
+    int MeniuCitireConsola::ReadInput(){  
         std::cin>>input;
         switch(input[0]){
             case 'y':
@@ -184,7 +184,13 @@ void Meniu::bindCalculator(Calculator &calculator){
             std::string dn;
             std::cin>>dn;
             if( dn == "da") {
-                //salvam rezultatul in y si in l
+                //salvam rezultatul in y 
+                
+                //si in l
+                if(MeniuCitireFisier::l!=nullptr)
+                    delete[] MeniuCitireFisier::l;
+                MeniuCitireFisier::l = new char[strlen(y)+1];
+                strcpy(MeniuCitireFisier::l,y);
             }
     }
 
@@ -252,7 +258,6 @@ void Meniu::bindCalculator(Calculator &calculator){
                 std::cout << Rezline << std::endl;
             }
             MeniuCitireConsola::SaveResult();
-            // Close the file
             Rezfile.close();            
         }
         else {
@@ -278,7 +283,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-         file.close();
+        file.close();
     }
 
     int MeniuCitireFisier::ReadInput(){
@@ -347,7 +352,13 @@ void Meniu::bindCalculator(Calculator &calculator){
             std::string dn;
             std::cin>>dn;
             if( dn == "da") {
-                //salvam rezultatul in l si in y 
+                //salvam rezultatul in l 
+                
+                //si in y 
+                if(MeniuCitireConsola::y!=nullptr)
+                    delete[] MeniuCitireConsola::y;
+                MeniuCitireConsola::y = new char[strlen(l)+1];
+                strcpy(MeniuCitireConsola::y, l);
             }
     }
 
