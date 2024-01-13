@@ -4,31 +4,12 @@
 #include <fstream>
 #include "meniu.h"
 
-
-    MeniuPrincipal::MeniuPrincipal(char* _y){
-        y = new char[strlen(_y) + 1];
-        strcpy(y,_y);
-    }
-
-    MeniuPrincipal::MeniuPrincipal(const MeniuPrincipal& mp){
-        y=new char[strlen(mp.y) + 1];
-        strcpy(y, mp.y);
-    }
-
-    MeniuPrincipal& MeniuPrincipal::operator=(const MeniuPrincipal& mp){
-        if(this != &mp){
-            if(y!=NULL){
-                delete[] y;
-            }
-            y=new char[strlen(mp.y) + 1];
-            strcpy(y,mp.y);
-            return *this;
-        }
-        else return *this;
-    }
-
-    MeniuPrincipal::~MeniuPrincipal(){
-        delete[] y;
+    void MeniuPrincipal::DisplayMenu(){
+        std::ifstream file("MeniuPrincipal.txt");
+        std::string line;
+        while (getline(file, line)) 
+            std::cout << line << '\n';
+        file.close();
     }
 
     void MeniuPrincipal::Inapoi(){
@@ -36,30 +17,50 @@
         exit(0); 
     } 
 
-    void MeniuPrincipal::CitireConsola(){
+    int MeniuPrincipal::CitireConsola(){
         //curata consola
         system("CLS");
         std::cout<<std::flush <<'\n';
-        //creeaza nou obiect din clasa respectiva
+        return CodCitireConsola;
         };
-    void MeniuPrincipal::CitireFisier(){
+    int MeniuPrincipal::CitireFisier(){
         //curata consola
         system("CLS");
         std::cout<<std::flush <<'\n';
-        //afiseaza fisierul de citire din fisier
+        return CodCitireFisier;
                
     };
 
-    void MeniuPrincipal::AfisareIstoric(){
+    int MeniuPrincipal::AfisareIstoric(){
         system("CLS");
         std::cout<<std::flush <<'\n';
-        //creeare obj istoric
-        //care contine
-        // inapoi
+        return CodAfisareIstoric;
+    }
+
+    void MeniuPrincipal::FeelingLucky(){
+        int r= 1 + rand() % 5;
+        switch(r){
+            case 1:
+                MeniuPrincipal::CitireConsola();
+                break;
+            case 2:
+                MeniuPrincipal::CitireFisier();
+                break;   
+            case 3:
+                MeniuPrincipal::AfisareIstoric();
+                break;
+            case 4:
+                MeniuPrincipal::Inapoi();
+                break;
+            // case '5':
+            //     MeniuPrincipal::HiddenOption();
+            //     break;
+        }
     }
 
     void MeniuPrincipal::ReadInput(){
-        switch(y[0]){
+        std::cin>>input;
+        switch(input[0]){
             case '1':
                 MeniuPrincipal::CitireConsola();
                 break;
@@ -72,22 +73,39 @@
             case '4':
                 MeniuPrincipal::Inapoi();
                 break;
+            // case '5':
+            //     MeniuPrincipal::HiddenOption();
+            //     break;
+            case '?':
+                MeniuPrincipal::FeelingLucky();
+                break;
+            default:
+                std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
+                system("CLS");
+                std::cout<<std::flush <<'\n';
+                MeniuPrincipal::ReadInput();
+                break;
         }
     }
 
-    char* MeniuPrincipal::getY(){ return y;}
 
 
     //------------------------------------------------------------------------
 
+
+
     MeniuCitireConsola::MeniuCitireConsola(char* _y){
+        if(_y!=nullptr){
         y = new char[strlen(_y) + 1];
         strcpy(y,_y);
+        }
     }
 
     MeniuCitireConsola::MeniuCitireConsola(const MeniuCitireConsola& mcc){
+        if(mcc.y != nullptr ){
         y=new char[strlen(mcc.y) + 1];
         strcpy(y, mcc.y);
+    }
     }
 
     MeniuCitireConsola& MeniuCitireConsola::operator=(const MeniuCitireConsola& mcc){
@@ -103,11 +121,13 @@
     }
 
     MeniuCitireConsola::~MeniuCitireConsola(){
+        if(y!=nullptr){
         delete[] y;
+        }
     }
 
     void MeniuCitireConsola::ReadInput(){  //scot din asta si citesc ca e deja atribut in clasa abstr.
-        //citire input
+        std::cin>>input;
         switch(input[0]){
             case 'y':
                 MeniuCitireConsola::InserareVariabilaVariabilaSalvata();
@@ -121,37 +141,105 @@
             case '4':
                 MeniuCitireConsola::Inapoi();
                 break;
+             default:
+                std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
+                system("CLS");
+                std::cout<<std::flush <<'\n';
+                MeniuCitireConsola::ReadInput();
+                break;
         }
     }
     
+    void MeniuCitireConsola::Inapoi()
+    {
 
-     void MeniuCitireConsola::Inapoi(){
+    };
+
+     int MeniuCitireConsola::InapoiMP(){
         system("CLS");
         std::cout<<std::flush <<'\n';
-        //Iese din program, functioneaza ca un IESIRE()
+        return CodMeniuPrincipal;
     } 
 
     void MeniuCitireConsola::SaveResult(){ 
         //salveaza in fisier rezultate
+        std::cout<<"\nSalvati rezultatul?(da/nu)\n";
+            std::string dn;
+            std::cin>>dn;
+            if( dn == "da") {
+                //salvam rezultatul in y   
+            }
     }
 
-    void MeniuCitireConsola::InserareVariabilaVariabilaSalvata(/*y, char* expresie*/){ 
-        //insereaza in ecuatie variabila salvata
-        //
+    int MeniuCitireConsola::InserareVariabilaVariabilaSalvata(/*y, char* expresie*/){
+        system("CLS");
+        std::cout<<std::flush <<'\n';
+        std::cout<<"Unde afisati rezultatele? (fisier/cosola)"<< '\n';
+        std::string fc;
+        std::cin>>fc;
+        if( fc == "consola"){
+            system("CLS");
+            std::cout<<std::flush <<'\n';
+            std::cout<<"Scrieti expresia: "<<'\n';
+            std::cout<<y<<' ';
+            //insereaza in ecuatie variabila salvata
+            //calculeaza ecuatia
+            MeniuCitireConsola::SaveResult();
+        }
+        if(fc == "fisier"){
+            std::ifstream Rezfile("Rezultate.txt");
+            std::string Rezline;
+            //calculeaza expresia
+            //o pune in fisier pe o linie noua
+            //mai jos afiseaza linia respectiva
+            while (getline(Rezfile, Rezline)) {
+                std::cout << Rezline << std::endl;
+            }
+
+            // Close the file
+            Rezfile.close();
+            system("CLS");
+            std::cout<<std::flush <<'\n';
+            MeniuCitireConsola::SaveResult();
+        }
+        else {
+            std::cout<<"\nCalea oferita nu este o optiune. Va rugam incercati din nou."<<std::endl;
+        }
+        return CodCitireConsola;
     }
 
-    void MeniuCitireConsola::Citire(/*char* expresie*/){
-        //if(citire consola)
-        //citire expresie
-        //else{ desxhizi fisierul text si afisezi acolo       }
-    }
-
-    void MeniuPrincipal::SaveResult()
-    {
+    int MeniuCitireConsola::Citire(/*char* expresie*/){
+        system("CLS");
+        std::cout<<std::flush <<'\n';
         
-    };
-
-    void Meniu::bindCalculator(Calculator &calculator)
-    {
-        this->calc=&calculator;
+        std::cout<<"Unde afisati rezultatele? (fisier/cosola)"<< '\n';
+        std::string fc;
+        std::cin>>fc;
+        if( fc == "consola"){
+            system("CLS");
+            std::cout<<std::flush <<'\n';
+            std::cout<<"Scrieti expresia: "<<'\n';
+            //insereaza in ecuatie variabila salvata
+            //calculeaza ecuatia
+            MeniuCitireConsola::SaveResult();
+        }
+        if(fc == "fisier"){
+            std::ifstream Rezfile("Rezultate.txt");
+            std::string Rezline;
+            //calculeaza expresia
+            //o pune in fisier pe o linie noua
+            //mai jos afiseaza linia respectiva
+            while (getline(Rezfile, Rezline)) {
+                std::cout << Rezline << std::endl;
+            }
+            MeniuCitireConsola::SaveResult();
+            // Close the file
+            Rezfile.close();            
+        }
+        else {
+            std::cout<<"Calea oferita nu este o optiune. Va rugam incercati din nou"<<std::endl;
+        }
+        return CodCitireConsola;
     }
+
+    char* MeniuCitireConsola::y=nullptr;

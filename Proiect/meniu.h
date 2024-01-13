@@ -3,6 +3,10 @@
 #include <stdlib.h> 
 #include <cstring>
 #include <fstream>
+#define CodMeniuPrincipal 111
+#define CodCitireConsola 222
+#define CodCitireFisier 333
+#define CodAfisareIstoric 444 
 
 class Calculator;
 
@@ -21,24 +25,14 @@ protected:
 class MeniuPrincipal : public Meniu{
 public:
     MeniuPrincipal();
-    MeniuPrincipal(char* _y);
-    MeniuPrincipal(const MeniuPrincipal& mp);
-    MeniuPrincipal& operator=(const MeniuPrincipal& mp);
-    ~MeniuPrincipal();
-
-
-    //void DisplayMenu();
+    void DisplayMenu();
     void ReadInput() override;
     void Inapoi() override;
-    void SaveResult() override;
-    void CitireConsola();
-    void CitireFisier(); 
-    char* getY();
-    void AfisareIstoric();
-    //void FeelingLucky(rand)
-    //hidden option
-private:
-    char *y = nullptr;
+    int CitireConsola();
+    int CitireFisier(); 
+    int AfisareIstoric();
+    void FeelingLucky();
+    //void HiddenOption();
 };
 
 class MeniuCitireConsola : public Meniu{
@@ -51,16 +45,18 @@ public:
 
     void ReadInput() override;
     void Inapoi() override;
+    int InapoiMP();
     void SaveResult() override;
-    void InserareVariabilaVariabilaSalvata();
+    int InserareVariabilaVariabilaSalvata();
     char* getY();
-    void Citire();
-
+    int Citire();
+    friend class MeniuPrincipal;
 private:
-    //static 
-    char *y = nullptr;
+    static char *y;
 
 
 
     //!!!!! Verificari dsa nu fie y null. daca e null, ghinion
 };
+
+
