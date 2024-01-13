@@ -1,0 +1,33 @@
+   ____    _    _     ____ _   _ _        _  _____ ___  ____  
+  / ___|  / \  | |   / ___| | | | |      / \|_   _/ _ \|  _ \ 
+ | |     / _ \ | |  | |   | | | | |     / _ \ | || | | | |_) |
+ | |___ / ___ \| |__| |___| |_| | |___ / ___ \| || |_| |  _ < 
+  \____/_/   \_\_____\____|\___/|_____/_/   \_\_| \___/|_| \_\
+                                                                                                     
+
+[MENIU]
+<1> Citire din Consola <1/>
+<2> Citire din Fisier <2/>
+<3> Informatii utilizare <3/>  (nu cred ca avem nevoie de el aici)
+<4> Afisare Istoric <4/>
+<5> Iesire <5/>
+
+___________________________________________
+
+[Citire din Consola]
+
+<y> Inserare variabila salvata <y/>
+<2> Salvare rezultat in variabila <2/>
+<3> Inapoi la MENIU <3/>
+
+---------------------------
+
+[Citire din Fisier]
+
+<1> Salvare rezultat in variabila <1/>
+<2> Inapoi la MENIU <2/>
+
+---------------------------
+[Afisare Istoric]
+
+...(aici afisam rezultatul salvat si numarul lui, eventual dintr-un vector)
