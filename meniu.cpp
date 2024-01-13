@@ -4,6 +4,36 @@
 #include <fstream>
 #include "meniu.h"
 
+void Meniu::bindCalculator(Calculator &calculator){
+        this->calc=&calculator;
+    }
+
+    MeniuPrincipal::MeniuPrincipal()
+    {
+
+    };
+
+    MeniuCitireConsola::MeniuCitireConsola()
+    {
+
+    };
+
+    void MeniuPrincipal::SaveResult()
+    {
+
+    };
+
+       void MeniuCitireConsola::Inapoi()
+    {
+
+    };
+
+    char* MeniuCitireFisier::l=nullptr;
+    
+    char* MeniuCitireConsola::y=nullptr;
+
+    //-----------------------------------------------------------------------------
+
     void MeniuPrincipal::DisplayMenu(){
         std::ifstream file("MeniuPrincipal.txt");
         std::string line;
