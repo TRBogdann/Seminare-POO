@@ -4,26 +4,11 @@
 #include <fstream>
 #include "meniu.h"
 
-
-    void Meniu::bindCalculator(Calculator &calculator){
-        this->calc=&calculator;
-    }
-
-    MeniuPrincipal::MeniuPrincipal()
-    {
-
-    };
-
-    MeniuCitireConsola::MeniuCitireConsola()
-    {
-
-    };
-    
     void MeniuPrincipal::DisplayMenu(){
         std::ifstream file("MeniuPrincipal.txt");
         std::string line;
         while (getline(file, line)) 
-            std::cout << line << '\n';
+        std::cout << line << '\n';
         file.close();
     }
 
@@ -107,38 +92,18 @@
 
     //------------------------------------------------------------------------
 
-
-
-    MeniuCitireConsola::MeniuCitireConsola(char* _y){
-        if(_y!=nullptr){
-        y = new char[strlen(_y) + 1];
-        strcpy(y,_y);
-        }
+    
+    void MeniuCitireConsola::DisplayMenu(){
+        system("CLS");
+        std::cout<<std::flush <<'\n';
+        std::ifstream file("MeniuCitireConsola.txt");
+        std::string line;
+        while (getline(file, line)) 
+        std::cout << line << '\n';
+        file.close();
     }
 
-    void MeniuPrincipal::SaveResult()
-    {
 
-    };
-
-    MeniuCitireConsola::MeniuCitireConsola(const MeniuCitireConsola& mcc){
-        if(mcc.y != nullptr ){
-        y=new char[strlen(mcc.y) + 1];
-        strcpy(y, mcc.y);
-    }
-    }
-
-    MeniuCitireConsola& MeniuCitireConsola::operator=(const MeniuCitireConsola& mcc){
-        if(this != &mcc){
-            if(y!=NULL){
-                delete[] y;
-            }
-            y=new char[strlen(mcc.y) + 1];
-            strcpy(y,mcc.y);
-            return *this;
-        }
-        else return *this;
-    }
 
     MeniuCitireConsola::~MeniuCitireConsola(){
         if(y!=nullptr){
@@ -151,15 +116,12 @@
         switch(input[0]){
             case 'y':
                 MeniuCitireConsola::InserareVariabilaVariabilaSalvata();
-                break;
-            case '2':
-                MeniuCitireConsola::SaveResult();
                 break;   
-            case '3':
+            case '2':
                 MeniuCitireConsola::Citire();
                 break;
-            case '4':
-                MeniuCitireConsola::Inapoi();
+            case '3':
+                MeniuCitireConsola::InapoiMP();
                 break;
              default:
                 std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
@@ -170,10 +132,6 @@
         }
     }
     
-    void MeniuCitireConsola::Inapoi()
-    {
-
-    };
 
      int MeniuCitireConsola::InapoiMP(){
         system("CLS");
@@ -246,6 +204,8 @@
         if(fc == "fisier"){
             std::ifstream Rezfile("Rezultate.txt");
             std::string Rezline;
+            system("CLS");
+            std::cout<<std::flush <<'\n';
             //calculeaza expresia
             //o pune in fisier pe o linie noua
             //mai jos afiseaza linia respectiva
@@ -262,4 +222,95 @@
         return CodCitireConsola;
     }
 
-    char* MeniuCitireConsola::y=nullptr;
+  
+ //------------------------------------------------------------------------
+
+
+    MeniuCitireFisier::~MeniuCitireFisier(){
+        if(l!=nullptr) delete l;
+    }
+
+    void MeniuCitireFisier::DisplayMenu(){
+        system("CLS");
+        std::cout<<std::flush <<'\n';
+        std::ifstream file("MeniuCitireFisier.txt");
+        std::string line;
+        while (getline(file, line)) 
+        std::cout << line << '\n';
+        file.close();
+    }
+
+    void MeniuCitireFisier::ReadInput(){
+        std::cin>>input;
+        switch(input[0]){
+            case '1':
+                MeniuCitireFisier::Citire();
+                break;
+            case '2':
+                MeniuCitireFisier::InapoiMP();
+             default:
+                std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
+                system("CLS");
+                std::cout<<std::flush <<'\n';
+                MeniuCitireFisier::ReadInput();
+                break;
+        }
+    }    
+
+    int MeniuCitireFisier::InapoiMP(){ 
+        system("CLS");
+        std::cout<<std::flush <<'\n';
+        return CodMeniuPrincipal;
+    }
+
+    int MeniuCitireFisier::Citire(){ 
+        system("CLS");
+        std::cout<<std::flush <<'\n';
+        
+        std::cout<<"Unde afisati rezultatele? (fisier/cosola)"<< '\n';
+        std::string fc;
+        std::cin>>fc;
+        if( fc == "consola"){
+            system("CLS");
+            std::cout<<std::flush <<'\n';
+            //citeste expresia
+            //calculeaza ecuatia
+            MeniuCitireFisier::SaveResult();
+        }
+        if(fc == "fisier"){
+            
+            system("CLS");
+            std::cout<<std::flush <<'\n';
+            std::ifstream Rezfile("Rezultate.txt");
+            std::string Rezline;
+            //calculeaza expresia
+            //o pune in fisier pe o linie noua
+            //mai jos afiseaza linia respectiva
+            while (getline(Rezfile, Rezline)) {
+                std::cout << Rezline << std::endl;
+            }
+
+            MeniuCitireFisier::SaveResult();
+            // Close the file
+            Rezfile.close();            
+        }
+        else {
+            std::cout<<"Calea oferita nu este o optiune. Va rugam incercati din nou"<<std::endl;
+        }
+        return CodCitireFisier;
+    }
+
+    void MeniuCitireFisier::SaveResult(){
+
+        std::cout<<"\nSalvati rezultatul?(da/nu)\n";
+            std::string dn;
+            std::cin>>dn;
+            if( dn == "da") {
+                //salvam rezultatul in l  
+            }
+    }
+
+    void MeniuCitireFisier::Inapoi(){
+
+    }
+
