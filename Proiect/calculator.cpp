@@ -1,4 +1,5 @@
 #include "checker.h"
+#include "meniu.h"
 #define _CRT_SECURE_NO_WARNINGS
 #include "calculator.h"
 #include "equation.h"
@@ -6,6 +7,12 @@
 #include <iostream>
 #include <iomanip>
 
+void bind_objects(Calculator& calculator,MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola)
+{
+ calculator.bindMenu(meniuPrincipal,meniuConsola);
+ meniuConsola.bindCalculator(calculator);
+ meniuPrincipal.bindCalculator(calculator);
+};
 
 Calculator::Calculator(unsigned int buffer_size):
 handler(EquationHandler(buffer_size)),_buffer_size(buffer_size)
@@ -275,4 +282,10 @@ void Calculator::setBufferSize(int buffer_Size)
 {
     if(buffer_Size>this->_buffer_size)
         this->_buffer_size=buffer_Size;
+}
+
+void Calculator::bindMenu(MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola)
+{
+    this->mp=&meniuPrincipal;
+    this->mc=&meniuConsola;
 }

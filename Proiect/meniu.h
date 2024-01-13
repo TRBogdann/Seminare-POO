@@ -4,13 +4,18 @@
 #include <cstring>
 #include <fstream>
 
+class Calculator;
+
 class Meniu{
 public:
-    virtual void readInput()=0; 
+    virtual void ReadInput()=0; 
     virtual void Inapoi() = 0;
     virtual void SaveResult() = 0;  //aici sa vedem cum facem saveurile
+    void bindCalculator(Calculator &calculator);
 protected:
     std::string input;
+    //2 way binding;
+    Calculator *calc=nullptr;
 };
 
 class MeniuPrincipal : public Meniu{
@@ -23,8 +28,9 @@ public:
 
 
     //void DisplayMenu();
-    void ReadInput(char * input) override;
+    void ReadInput() override;
     void Inapoi() override;
+    void SaveResult() override;
     void CitireConsola();
     void CitireFisier(); 
     char* getY();
@@ -43,7 +49,7 @@ public:
     MeniuCitireConsola& operator=(const MeniuCitireConsola& mcc);
     ~MeniuCitireConsola();
 
-    void ReadInput(char * input) override;
+    void ReadInput() override;
     void Inapoi() override;
     void SaveResult() override;
     void InserareVariabilaVariabilaSalvata();
@@ -54,5 +60,7 @@ private:
     //static 
     char *y = nullptr;
 
+
+
     //!!!!! Verificari dsa nu fie y null. daca e null, ghinion
-}
+};

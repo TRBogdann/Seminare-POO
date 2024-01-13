@@ -2,24 +2,20 @@
 #include <fstream>
 #include <cstdlib>
 #include <cstring>
+#include <ostream>
 
-using namespace std;
+
+void exitTest()
+{
+    exit(0);
+};
 
 int main() {
-    // Open the file for reading
-    ifstream file("MeniuPrincipal.txt");
 
-    // Read each line of the file and print it to the terminal
-    string line;
-    while (getline(file, line)) {
-        cout << line << endl;
-    }
-
-    // Close the file
-    file.close();
-
-    // Use std::system() to execute the echo command
-    std::system("echo Hello World!");
-
+std::cout<<"Citeste ceva ";
+int a;
+exitTest();
+std::cin>>a;
+std::cout<<"Nu Merhe";
     return 0;
 }

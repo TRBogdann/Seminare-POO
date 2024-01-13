@@ -58,7 +58,7 @@
         // inapoi
     }
 
-    void MeniuPrincipal::ReadInput(char* input){
+    void MeniuPrincipal::ReadInput(){
         switch(y[0]){
             case '1':
                 MeniuPrincipal::CitireConsola();
@@ -106,7 +106,7 @@
         delete[] y;
     }
 
-    void MeniuCitireConsola::ReadInput(char* input){  //scot din asta si citesc ca e deja atribut in clasa abstr.
+    void MeniuCitireConsola::ReadInput(){  //scot din asta si citesc ca e deja atribut in clasa abstr.
         //citire input
         switch(input[0]){
             case 'y':
@@ -144,4 +144,14 @@
         //if(citire consola)
         //citire expresie
         //else{ desxhizi fisierul text si afisezi acolo       }
+    }
+
+    void MeniuPrincipal::SaveResult()
+    {
+        
+    };
+
+    void Meniu::bindCalculator(Calculator &calculator)
+    {
+        this->calc=&calculator;
     }

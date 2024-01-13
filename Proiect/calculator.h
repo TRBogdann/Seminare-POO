@@ -4,6 +4,9 @@
 #include "checker.h"
 #include "str_functions.h"
 #include "math_functions.h"
+#include "meniu.h"
+
+void bind_objects(Calculator& calculator,MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola);
 
 class Calculator{
 public:
@@ -44,6 +47,8 @@ void evalExpr();
 void clear();
 void printResult();
 void loop();
+void bindMenu(MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola);
+
 
 private:
 unsigned int _buffer_size;
@@ -56,5 +61,9 @@ std::string error_message;
 EquationHandler handler;
 std::string historyFile;
 int getPrecision();
+
+//2 way bindings
+MeniuPrincipal* mp=nullptr;
+MeniuCitireConsola* mc=nullptr;
 
 };
