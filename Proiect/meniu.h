@@ -2,19 +2,25 @@
 #include <iostream>
 #include <stdlib.h> 
 #include <cstring>
+#include <string>
 #include <fstream>
 #define CodMeniuPrincipal 111
 #define CodCitireConsola 222
 #define CodCitireFisier 333
 #define CodAfisareIstoric 444 
 
+class Calculator;
+
+
 class Meniu{
 public:
     virtual void ReadInput()=0; 
     virtual void Inapoi() = 0;
     virtual void SaveResult() = 0;  //aici sa vedem cum facem saveurile
+    void bindCalculator(Calculator &calculator);
 protected:
     std::string input;
+    Calculator *calc=nullptr;
 };
 
 class MeniuPrincipal : public Meniu{
@@ -28,6 +34,7 @@ public:
     int AfisareIstoric();
     void FeelingLucky();
     //void HiddenOption();
+    void SaveResult() override;
 };
 
 class MeniuCitireConsola : public Meniu{
@@ -42,13 +49,13 @@ public:
     int InserareVariabilaVariabilaSalvata();
     char* getY();
     int Citire();
+    void Inapoi() override;
 private:
     static char *y;
 
     //!!!!! Verificari dsa nu fie y null. daca e null, ghinion
 }
 
-char* MeniuCitireConsola::y=nullptr;
 
 class MeniuCitireFisier : public Meniu{
 public:
@@ -65,4 +72,9 @@ private:
     static char* l;
 }
 
-char* MeniuCitireFisier::l=nullptr;
+class AfisareIstorical : public Meniu{
+public:
+    
+private:
+}
+
