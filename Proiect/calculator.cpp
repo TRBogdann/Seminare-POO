@@ -92,7 +92,7 @@ int Calculator::getPrecision()
 
 void Calculator::loopF2()
 {
-    // 111.Meniu principal 222.Consola 333.Fisier 444.Istoric 555.Executie
+    // 111.Meniu principal 222.Consola 333.Fisier 444.Istoric default ceva
    int selectedLast=111;
     if(!mc || !mp)
     {
@@ -106,12 +106,12 @@ void Calculator::loopF2()
         {
             case 111:
             mp->DisplayMenu();
-            mp->ReadInput();
+            selectedLast=mp->ReadInput();
                 break;
 
             case 222:
             mc->DisplayMenu();
-            mc->ReadInput();
+            selectedLast=mc->ReadInput();
                 break;
 
             case 333:
@@ -121,7 +121,7 @@ void Calculator::loopF2()
                 break; 
 
             default:
-            
+
                 break;
         }
     }

@@ -16,7 +16,7 @@ ___________________________________________
 
 [Citire din Consola]
 
-<y> Inserare variabila salvata <y/>
+<1> Inserare variabila salvata <1/>
 <2> Salvare rezultat in variabila <2/>
 <3> Inapoi la MENIU <3/>
 
