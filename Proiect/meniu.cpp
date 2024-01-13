@@ -39,7 +39,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-        file.close();
+         file.close();
     }
 
     void MeniuPrincipal::Inapoi(){
@@ -130,7 +130,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-        file.close();
+         file.close();
     }
 
 
@@ -267,7 +267,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-        file.close();
+         file.close();
     }
 
     void MeniuCitireFisier::ReadInput(){

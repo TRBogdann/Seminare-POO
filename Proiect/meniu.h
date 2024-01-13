@@ -54,7 +54,7 @@ private:
     static char *y;
 
     //!!!!! Verificari dsa nu fie y null. daca e null, ghinion
-}
+};
 
 
 class MeniuCitireFisier : public Meniu{
@@ -70,11 +70,11 @@ public:
     int Citire();
 private:
     static char* l;
-}
+};
 
 class AfisareIstorical : public Meniu{
 public:
     
 private:
-}
+};
 

@@ -43,6 +43,20 @@ std::istream& operator>>(std::istream& is, Checker& ch){
   return 0;
 }
 
+ bool Checker::checkReturn(char *str)
+{
+  if(strlen(str)==0)
+    return 1;
+
+  if(strlen(str)==1 and str[0]=='\n')
+    return 1;
+
+  if(strlen(str)==6)
+    if(strcmp(str,"return")==0)
+        return 1;
+
+  return 0;
+}
 
 
 bool Checker::isOperator(char c)

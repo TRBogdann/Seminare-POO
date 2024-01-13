@@ -92,17 +92,38 @@ int Calculator::getPrecision()
 
 void Calculator::loopF2()
 {
-    // 1.Meniu principal 2.Consola 3.Fisier 4.Executie
-    char selectedLast=1;
+    // 111.Meniu principal 222.Consola 333.Fisier 444.Istoric 555.Executie
+   int selectedLast=111;
     if(!mc || !mp)
     {
      throw "Menu was not bound";
     }
-    mp->DisplayMenu();
-    mp->ReadInput();
+    this->clear();
+    this->error_message="";
     while(this->error_message!="Exiting program")
     {
+        switch(selectedLast)
+        {
+            case 111:
+            mp->DisplayMenu();
+            mp->ReadInput();
+                break;
 
+            case 222:
+            mc->DisplayMenu();
+            mc->ReadInput();
+                break;
+
+            case 333:
+                break;
+
+            case 444:
+                break; 
+
+            default:
+            
+                break;
+        }
     }
 };
 

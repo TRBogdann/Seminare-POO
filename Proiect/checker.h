@@ -37,6 +37,7 @@ friend std::ostream& operator<<(std::ostream& os, const Checker& ch);
 friend std::istream& operator>>(std::istream& is, Checker& ch);
 //Metode
 bool checkExit(char *str);
+bool checkReturn(char *str);
 bool checkDivZero(char *str);
 bool checkDots(char *str);
 bool checkIfEcuation(char *str);
