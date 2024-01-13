@@ -263,11 +263,11 @@ void Meniu::bindCalculator(Calculator &calculator){
     void MeniuCitireFisier::DisplayMenu(){
         system("CLS");
         std::cout<<std::flush <<'\n';
-        std::ifstream file("MeniuCitireFisier.txt");
+        std::ifstream file("MeniuFisier.txt");
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
-        file.close();
+         file.close();
     }
 
     void MeniuCitireFisier::ReadInput(){

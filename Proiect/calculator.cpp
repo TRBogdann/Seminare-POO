@@ -7,11 +7,12 @@
 #include <iostream>
 #include <iomanip>
 
-void bind_objects(Calculator& calculator,MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola)
+void bind_objects(Calculator& calculator,MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola,MeniuCitireFisier& meniuFisier)
 {
- calculator.bindMenu(meniuPrincipal,meniuConsola);
+ calculator.bindMenu(meniuPrincipal,meniuConsola,meniuFisier);
  meniuConsola.bindCalculator(calculator);
  meniuPrincipal.bindCalculator(calculator);
+ meniuFisier.bindCalculator(calculator);
 };
 
 Calculator::Calculator(unsigned int buffer_size):
@@ -94,7 +95,7 @@ void Calculator::loopF2()
 {
     // 111.Meniu principal 222.Consola 333.Fisier 444.Istoric default ceva
    int selectedLast=CodMeniuPrincipal;
-    if(!mc || !mp)
+    if(!mc || !mp || !mf)
     {
      throw "Menu was not bound";
     }
@@ -116,10 +117,9 @@ void Calculator::loopF2()
                 break;
 
             case CodCitireFisier:
+            mf->DisplayMenu();
+            selectedLast=mf->ReadInput();
                 break;
-
-            case CodCitireEcuatie:   
-                break; 
 
             default:
                 this->error_message="Exiting program";
@@ -323,8 +323,9 @@ void Calculator::setBufferSize(int buffer_Size)
         this->_buffer_size=buffer_Size;
 }
 
-void Calculator::bindMenu(MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola)
+void Calculator::bindMenu(MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola,MeniuCitireFisier& meniuFisier)
 {
     this->mp=&meniuPrincipal;
     this->mc=&meniuConsola;
+    this->mf=&meniuFisier;
 }

@@ -1,4 +1,5 @@
 #include "calculator.h"
+#include "meniu.h"
 #include <vector>
 
 int main(int argc, char**argv)
@@ -7,8 +8,9 @@ int main(int argc, char**argv)
 Calculator c(1000);
 MeniuPrincipal mp;
 MeniuCitireConsola mc;
+MeniuCitireFisier mf;
 
-bind_objects(c,mp,mc);
+bind_objects(c,mp,mc,mf);
 
 if(argc>1)
 {

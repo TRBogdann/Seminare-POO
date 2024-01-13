@@ -6,6 +6,6 @@
                                                                                                      
 
 [MENIU]
-<1> Salvare rezultat in variabila <1/>
+<1> Citire din fisier <1/>
 <2> Inapoi la MENIU <2/>
     

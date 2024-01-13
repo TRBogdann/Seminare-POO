@@ -5,8 +5,9 @@
 #include "str_functions.h"
 #include "math_functions.h"
 #include "meniu.h"
+#include <cstddef>
 
-void bind_objects(Calculator& calculator,MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola);
+void bind_objects(Calculator& calculator,MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola,MeniuCitireFisier& meniuFisier);
 
 class Calculator{
 public:
@@ -48,7 +49,7 @@ void clear();
 void printResult();
 void loop();
 void loopF2();
-void bindMenu(MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola);
+void bindMenu(MeniuPrincipal& meniuPrincipal,MeniuCitireConsola& meniuConsola,MeniuCitireFisier& meniuFisier);
 
 
 private:
@@ -66,5 +67,6 @@ int getPrecision();
 //2 way bindings
 MeniuPrincipal* mp=nullptr;
 MeniuCitireConsola* mc=nullptr;
+MeniuCitireFisier* mf=nullptr;
 
 };

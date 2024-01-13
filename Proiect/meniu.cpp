@@ -317,6 +317,8 @@ void Meniu::bindCalculator(Calculator &calculator){
         }
         else{
         if(fc == "fisier"){
+            system("CLS");
+            std::cout<<std::flush <<'\n';
         std::ofstream Rezfile("Rezultate.txt",std::ios::app);
         std::string Rezline;
         std::cout<<"Scrieti expresia: "<<'\n';
@@ -356,8 +358,7 @@ void Meniu::bindCalculator(Calculator &calculator){
 
             // Close the file
             Rezfile.close();
-            MeniuCitireConsola::SaveResult();
-            Rezfile.close();            
+            MeniuCitireConsola::SaveResult();           
         }
         else {
             std::cout<<"Calea oferita nu este o optiune. Va rugam incercati din nou"<<std::endl;
@@ -371,6 +372,10 @@ void Meniu::bindCalculator(Calculator &calculator){
   //MENIU CITIRE FISIER
  //------------------------------------------------------------------------
 
+ MeniuCitireFisier::MeniuCitireFisier()
+        {
+
+        }
 
     MeniuCitireFisier::~MeniuCitireFisier(){
         if(l!=nullptr) delete l;
@@ -379,7 +384,7 @@ void Meniu::bindCalculator(Calculator &calculator){
     void MeniuCitireFisier::DisplayMenu(){
         system("CLS");
         std::cout<<std::flush <<'\n';
-        std::ifstream file("MeniuCitireFisier.txt");
+        std::ifstream file("MeniuFisier.txt");
         std::string line;
         while (getline(file, line)) 
         std::cout << line << '\n';
@@ -413,33 +418,88 @@ void Meniu::bindCalculator(Calculator &calculator){
     int MeniuCitireFisier::Citire(){ 
         system("CLS");
         std::cout<<std::flush <<'\n';
+        std::string filename;
+        std::cout<<"Nume Fisier:";
+        std::cin>>filename;
+        std::cout<<'\n';
+
+        std::ifstream fisierCitire(filename);
+        if(fisierCitire.fail())
+        {
+            std::cout<<"Fisierul nu a fost gasit";
+            return CodMeniuPrincipal;
+        }
         
-        std::cout<<"Unde afisati rezultatele? (fisier/cosola)"<< '\n';
+        std::cout<<"Unde afisati rezultatele? (fisier/consola)"<< '\n';
         std::string fc;
         std::cin>>fc;
         if( fc == "consola"){
             system("CLS");
             std::cout<<std::flush <<'\n';
-            //citeste expresia
-            //calculeaza ecuatia
+         char *buffer=new char[calc->getBufferSize()+1];
+         std::cin.get();
+            while(fisierCitire.getline(buffer,calc->getBufferSize()+1))
+            {
+            std::cout<<"Expresie: "<<buffer;
+            std::cout<<'\n';
+            calc->setExpr(buffer);
+            calc->evalExpr();
+            calc->printResult();
+            char a;
+            std::cout<<"\nPress Enter to Continue.";
+            std::cin.get();
+            std::cout<<"\n\n";
+            }
+            delete[] buffer;
             MeniuCitireFisier::SaveResult();
         }
-        if(fc == "fisier"){
+        else{if(fc == "fisier"){
             
             system("CLS");
             std::cout<<std::flush <<'\n';
-            std::ifstream Rezfile("Rezultate.txt");
-            std::string Rezline;
-            while (getline(Rezfile, Rezline)) {
-                std::cout << Rezline << std::endl;
-
+        std::ofstream Rezfile("Rezultate.txt",std::ios::app);
+        std::string Rezline;
+        char *buffer=new char[calc->getBufferSize()+1];
+        while(fisierCitire.getline(buffer,calc->getBufferSize()+1))
+        {
+        calc->setExpr(buffer);
+        calc->evalExpr();
+        if(calc->getErrorMessage()!="")
+         {
+        if(calc->getErrorMessage()=="Exiting program")
+                return 0;
+        return CodCitireConsola;
+         }
+         Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
+         Rezfile<<"Rezultat: ";
+         if(calc->getType())
+         {
+            if(calc->getSolutii().x1==calc->getSolutii().x2)
+            {
+                Rezfile<<"x="<<calc->getSolutii().x1<<"\n\n";
             }
-
-            MeniuCitireFisier::SaveResult();
-            Rezfile.close();            
+            else 
+            {
+                Rezfile<<"x1="<<calc->getSolutii().x1<<' ';
+                Rezfile<<"x2="<<calc->getSolutii().x2<<"\n\n";
+            }
+         }
+         else
+        {
+            Rezfile<<calc->getResult()<<"\n\n";
         }
-        else {
+            }
+        delete[] buffer;
+            std::cout<<"Rezultatul a fost adaugat fisierului Rezultate.txt";
+        
+
+            // Close the file
+            Rezfile.close();    
+            MeniuCitireFisier::SaveResult();      
+        }
+             else {
             std::cout<<"Calea oferita nu este o optiune. Va rugam incercati din nou"<<std::endl;
+        }
         }
         return CodCitireFisier;
     }
@@ -450,9 +510,7 @@ void Meniu::bindCalculator(Calculator &calculator){
             std::string dn;
             std::cin>>dn;
             if( dn == "da") {
-                //salvam rezultatul in l 
-                
-                //si in y 
+                l=str_functions::double_to_string(calc->getResult());
                 if(MeniuCitireConsola::y!=nullptr)
                     delete[] MeniuCitireConsola::y;
                 MeniuCitireConsola::y = new char[strlen(l)+1];
