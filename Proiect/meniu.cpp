@@ -4,6 +4,8 @@
 #include <stdlib.h> 
 #include <cstring>
 #include <fstream>
+#include <chrono>
+#include <thread>
 #include "meniu.h"
 #include "calculator.h"
 
@@ -97,7 +99,7 @@ void Meniu::writeRes()
 
 
     int MeniuPrincipal::FeelingLucky(){
-        int r= 1 + rand() % 5;
+        int r =     1 + rand() % 5;
         switch(r){
             case 1:
                 return MeniuPrincipal::CitireConsola();
@@ -106,14 +108,16 @@ void Meniu::writeRes()
                 return MeniuPrincipal::CitireFisier();
                 break;   
             case 3:
-                return MeniuPrincipal::AfisareIstoric();
+                system("CLS");
+                std::cout << std::flush;
+                return CodMeniuPrincipal;//MeniuPrincipal::AfisareIstoric();
                 break;
             case 4:
                 MeniuPrincipal::Inapoi();
                 break;
-            // case '5':
-            //     MeniuPrincipal::HiddenOption();
-            //     break;
+             case 5:
+                 return MeniuPrincipal::HiddenOption();
+                 break;
         }
         return 0;
     }
@@ -160,47 +164,63 @@ void Meniu::writeRes()
         Rezultat_eq req;
         Rezultat_expr rexpr;
 
-    while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {  //nu poate citi din req mai jos. Eroare e la citire stringului
-        std::cout << "Equatie: " << req.expr << '\n';
-        if (req.x1 != req.x2) {
-            std::cout << "x1: " << req.x1 << '\n';
-            std::cout << "x2: " << req.x2 << "\n\n";
-        } else {
-            std::cout << "x: " << req.x2 << "\n\n";
-        }
-    };
-
-      /*  while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {
-            std::string equation;
-            equation.assign((char*)&req.expr[0], req.expr.size());
-
-            std::cout << "Equatie: " << equation << '\n';
+        while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {  //nu poate citi din req mai jos. Eroare e la citire stringului
+            std::cout << "Equatie: " << req.expr << '\n';
             if (req.x1 != req.x2) {
                 std::cout << "x1: " << req.x1 << '\n';
                 std::cout << "x2: " << req.x2 << "\n\n";
-            }
-            else {
+            } else {
                 std::cout << "x: " << req.x2 << "\n\n";
             }
-        };*/
+        };
+
+          /*  while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {
+                std::string equation;
+                equation.assign((char*)&req.expr[0], req.expr.size());
+
+                std::cout << "Equatie: " << equation << '\n';
+                if (req.x1 != req.x2) {
+                    std::cout << "x1: " << req.x1 << '\n';
+                    std::cout << "x2: " << req.x2 << "\n\n";
+                }
+                else {
+                    std::cout << "x: " << req.x2 << "\n\n";
+                }
+            };*/
 
 
-    isEq.close();
-    std::cout<<"\n\n\n";
+        isEq.close();
+        std::cout<<"\n\n\n";
 
-    std::ifstream isExp("istoricExpresii.dat");
+        std::ifstream isExp("istoricExpresii.dat");
         
-    std::cout<<"[Istoric Expresii]\n";
-        while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
-        std::cout << "Expresie: " << rexpr.expr << '\n';
-        std::cout << "Rezultat: "<< rexpr.res<<"\n\n";
-    };
-    isExp.close();
+        std::cout<<"[Istoric Expresii]\n";
+            while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
+            std::cout << "Expresie: " << rexpr.expr << '\n';
+            std::cout << "Rezultat: "<< rexpr.res<<"\n\n";
+        };
+        isExp.close();
         
-        std::cout<<"\nPress Enter To Exit";
-        std::cin.get();
+            std::cout<<"\nPress Enter To Exit";
+            std::cin.get();
+            return CodMeniuPrincipal;
+    }
+
+    int MeniuPrincipal::HiddenOption() {
+        system("CLS");
+        std::cout << std::flush;
+        std::string temp= {"Start Hacking PC....\nOpening Incognito Browser History...\n...What the f...\n"};
+        for (int i = 0; i < temp.length();i++) {
+            std::cout << temp[i];
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(40));
+        }
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        system("CLS");
+        std::cout << std::flush;
         return CodMeniuPrincipal;
     }
+
 //MENIU CITIRE CONSOLA
     //------------------------------------------------------------------------
 
