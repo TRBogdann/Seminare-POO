@@ -96,17 +96,17 @@ void Meniu::writeRes()
     };
 
 
-    void MeniuPrincipal::FeelingLucky(){
+    int MeniuPrincipal::FeelingLucky(){
         int r= 1 + rand() % 5;
         switch(r){
             case 1:
-                MeniuPrincipal::CitireConsola();
+                return MeniuPrincipal::CitireConsola();
                 break;
             case 2:
-                MeniuPrincipal::CitireFisier();
+                return MeniuPrincipal::CitireFisier();
                 break;   
             case 3:
-                MeniuPrincipal::AfisareIstoric();
+                return MeniuPrincipal::AfisareIstoric();
                 break;
             case 4:
                 MeniuPrincipal::Inapoi();
@@ -115,6 +115,7 @@ void Meniu::writeRes()
             //     MeniuPrincipal::HiddenOption();
             //     break;
         }
+        return 0;
     }
 
     int MeniuPrincipal::ReadInput(){
@@ -136,7 +137,7 @@ void Meniu::writeRes()
             //     MeniuPrincipal::HiddenOption();
             //     break;
             case '?':
-                MeniuPrincipal::FeelingLucky();
+                return MeniuPrincipal::FeelingLucky();
                 break;
             default:
                 std::cout<<"Unknown input, please choose from the list. Try again."<<std::endl;
@@ -159,26 +160,42 @@ void Meniu::writeRes()
         Rezultat_eq req;
         Rezultat_expr rexpr;
 
-while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {
-    std::cout << "Equatie: " << req.expr << '\n';
-    if (req.x1 != req.x2) {
-        std::cout << "x1: " << req.x1 << '\n';
-        std::cout << "x2: " << req.x2 << "\n\n";
-    } else {
-        std::cout << "x: " << req.x2 << "\n\n";
-    }
-};
-        isEq.close();
-        std::cout<<"\n\n\n";
+    while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {  //nu poate citi din req mai jos. Eroare e la citire stringului
+        std::cout << "Equatie: " << req.expr << '\n';
+        if (req.x1 != req.x2) {
+            std::cout << "x1: " << req.x1 << '\n';
+            std::cout << "x2: " << req.x2 << "\n\n";
+        } else {
+            std::cout << "x: " << req.x2 << "\n\n";
+        }
+    };
 
-     std::ifstream isExp("istoricExpresii.dat");
+      /*  while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {
+            std::string equation;
+            equation.assign((char*)&req.expr[0], req.expr.size());
+
+            std::cout << "Equatie: " << equation << '\n';
+            if (req.x1 != req.x2) {
+                std::cout << "x1: " << req.x1 << '\n';
+                std::cout << "x2: " << req.x2 << "\n\n";
+            }
+            else {
+                std::cout << "x: " << req.x2 << "\n\n";
+            }
+        };*/
+
+
+    isEq.close();
+    std::cout<<"\n\n\n";
+
+    std::ifstream isExp("istoricExpresii.dat");
         
     std::cout<<"[Istoric Expresii]\n";
-while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
-    std::cout << "Expresie: " << rexpr.expr << '\n';
-    std::cout << "Rezultat: "<< rexpr.res<<"\n\n";
-};
-        isExp.close();
+        while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
+        std::cout << "Expresie: " << rexpr.expr << '\n';
+        std::cout << "Rezultat: "<< rexpr.res<<"\n\n";
+    };
+    isExp.close();
         
         std::cout<<"\nPress Enter To Exit";
         std::cin.get();
@@ -245,7 +262,7 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
                 if(MeniuCitireFisier::l!=nullptr)
                     delete[] MeniuCitireFisier::l;
                 MeniuCitireFisier::l = new char[strlen(y)+1];
-                strcpy(MeniuCitireFisier::l,y);
+                strcpy_s(MeniuCitireFisier::l, strlen(y) + 1,y);
             }
     }
 
@@ -263,11 +280,11 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
         char *buffer=new char[calc->getBufferSize()+1];
 
         if(y!=nullptr){
-         strcpy(buffer,y);
+         strcpy_s(buffer, calc->getBufferSize() + 1,y);
          std::cout<<y;
         }
         else {
-         strcpy(buffer,"0");
+         strcpy_s(buffer,1,"0");
          std::cout<<'0';
         }
 
@@ -290,11 +307,11 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
   char *buffer=new char[calc->getBufferSize()+1];
 
         if(y!=nullptr){
-         strcpy(buffer,y);
+         strcpy_s(buffer, calc->getBufferSize() + 1,y);
          std::cout<<y;
         }
         else {
-         strcpy(buffer,"0");
+         strcpy_s(buffer, calc->getBufferSize() + 1,"0");
          std::cout<<'0';
         }
 
@@ -496,7 +513,10 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
         std::ifstream fisierCitire(filename);
         if(fisierCitire.fail())
         {
-            std::cout<<"Fisierul nu a fost gasit";
+            std::cout<<"Fisierul nu a fost gasit\n";
+            system("PAUSE");
+            system("CLS");
+			std::cout << std::flush << '\n';
             return CodMeniuPrincipal;
         }
         
@@ -506,9 +526,9 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
         if( fc == "consola"){
             system("CLS");
             std::cout<<std::flush <<'\n';
-         char *buffer=new char[calc->getBufferSize()+1];
-         std::cin.get();
-            while(fisierCitire.getline(buffer,calc->getBufferSize()+1))
+            char *buffer=new char[calc->getBufferSize()+1];
+             std::cin.get();
+            if(fisierCitire.getline(buffer,calc->getBufferSize()+1))
             {
             std::cout<<"Expresie: "<<buffer;
             std::cout<<'\n';
@@ -523,49 +543,57 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
             }
             delete[] buffer;
             MeniuCitireFisier::SaveResult();
+            return CodCitireFisier;
         }
-        else{if(fc == "fisier"){
+        else if(fc == "fisier"){
             
-            system("CLS");
-            std::cout<<std::flush <<'\n';
+        system("CLS");
+        std::cout<<std::flush <<'\n';
         std::ofstream Rezfile("Rezultate.txt",std::ios::app);
         std::string Rezline;
         char *buffer=new char[calc->getBufferSize()+1];
-        while(fisierCitire.getline(buffer,calc->getBufferSize()+1))
+        if(fisierCitire.getline(buffer,calc->getBufferSize()+1))
         {
-        calc->setExpr(buffer);
-        calc->evalExpr();
-        writeRes();
-        if(calc->getErrorMessage()!="")
-         {
-        if(calc->getErrorMessage()=="Exiting program")
-                return 0;
-        return CodCitireFisier;
-         }
-         char *temp=calc->getExpr();
+            calc->setExpr(buffer);
+            calc->evalExpr();
+            writeRes();
+            if(calc->getErrorMessage()!="")
+             {
+                if(calc->getErrorMessage()=="Exiting program")
+                        return 0;
+                return CodCitireFisier;
+             }
+             char *temp=calc->getExpr();
         
-         Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
-         Rezfile<<"Rezultat: ";
+             Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
+             Rezfile<<"Rezultat: ";
         
-         if(temp)delete[] temp;
+     //        if (temp != nullptr) {
+				 //try { delete[] temp; }
+     //            catch (const std::exception& e) {
+     //                // Prindem si gestionam exceptiile standard C++
+     //                std::cerr << "Something's wrong, I can fell it.... " << e.what() << std::endl;
+     //            }
+     //           
+     //        }//this fucks up
 
-         if(calc->getType())
-         {
-            if(calc->getSolutii().x1==calc->getSolutii().x2)
+             if(calc->getType())
+             {
+                if(calc->getSolutii().x1==calc->getSolutii().x2)
+                {
+                    Rezfile<<"x="<<calc->getSolutii().x1<<"\n\n";
+                }
+                else 
+                {
+                    Rezfile<<"x1="<<calc->getSolutii().x1<<' ';
+                    Rezfile<<"x2="<<calc->getSolutii().x2<<"\n\n";
+                }
+             }
+            else
             {
-                Rezfile<<"x="<<calc->getSolutii().x1<<"\n\n";
+                Rezfile<<calc->getResult()<<"\n\n";  //si apoi aici??
             }
-            else 
-            {
-                Rezfile<<"x1="<<calc->getSolutii().x1<<' ';
-                Rezfile<<"x2="<<calc->getSolutii().x2<<"\n\n";
-            }
-         }
-         else
-        {
-            Rezfile<<calc->getResult()<<"\n\n";
         }
-            }
         delete[] buffer;
             std::cout<<"Rezultatul a fost adaugat fisierului Rezultate.txt";
         
@@ -574,10 +602,12 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
             Rezfile.close();    
             MeniuCitireFisier::SaveResult();      
         }
-             else {
-            std::cout<<"Calea oferita nu este o optiune. Va rugam incercati din nou"<<std::endl;
+        
+        else if(fc != "fisier" && fc != "consola") {
+            std::cout<<"Calea oferita nu este o optiune. Apasati Enter pentru a continua."<<std::endl;
+            system("PAUSE");
         }
-        }
+        
         return CodCitireFisier;
     }
 
@@ -591,7 +621,7 @@ while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
                 if(MeniuCitireConsola::y!=nullptr)
                     delete[] MeniuCitireConsola::y;
                 MeniuCitireConsola::y = new char[strlen(l)+1];
-                strcpy(MeniuCitireConsola::y, l);
+                strcpy_s(MeniuCitireConsola::y, strlen(l) + 1, l);
             }
     }
 

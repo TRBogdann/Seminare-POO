@@ -51,7 +51,7 @@ public:
     void Inapoi() override;
     int CitireConsola();
     int CitireFisier(); 
-    void FeelingLucky();
+    int FeelingLucky();
     //void HiddenOption();
     void SaveResult() override;
     int AfisareIstoric();
