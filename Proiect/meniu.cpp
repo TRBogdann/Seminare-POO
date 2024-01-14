@@ -1,3 +1,4 @@
+#include <ostream>
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <stdlib.h> 
@@ -9,6 +10,35 @@
 void Meniu::bindCalculator(Calculator &calculator){
         this->calc=&calculator;
     }
+
+void Meniu::writeRes()
+{
+    if(calc->getErrorMessage()!="")
+        return;
+    if(calc->getType())
+    {
+        Rezultat_eq res;
+        char* temp=calc->getExpr();
+        res.expr=temp;
+        res.x1=calc->getSolutii().x1;
+        res.x2=calc->getSolutii().x2;
+        std::ofstream istoric("istoricEcuatii.dat");
+        istoric.write(reinterpret_cast<char*>(&res),sizeof(Rezultat_eq));
+        delete[] temp;
+        istoric.close();
+    }
+    else 
+    {
+        Rezultat_expr res;
+        char* temp=calc->getExpr();
+        res.expr=temp;
+        res.res=calc->getResult();
+        std::ofstream istoric("istoricExpresii.dat");
+        istoric.write(reinterpret_cast<char*>(&res),sizeof(Rezultat_expr));
+        delete[] temp;
+        istoric.close();
+    }
+}
 
     MeniuPrincipal::MeniuPrincipal()
     {
@@ -118,15 +148,40 @@ void Meniu::bindCalculator(Calculator &calculator){
         return 0;
     }
 
+//NU MERGE!!!
     int MeniuPrincipal::AfisareIstoric(){
         system("CLS");
         std::cout<<std::flush <<'\n';
-        std::cout<<"[Afisare Istoric]\n\n<1> Inapoi <1/>\n\n";
-        //afisare din fisierul binar al istoricului
-        int a=0;
-        while(a!=1){
-            std::cin>>a;
-        } 
+        std::ifstream isEq("istoricEcuatii.dat");
+        std::cout<<"[Afisare Istoric]\n\n\n";
+        std::cout<<"[Istoric Ecuatii]\n";
+
+        Rezultat_eq req;
+        Rezultat_expr rexpr;
+
+while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {
+    std::cout << "Equatie: " << req.expr << '\n';
+    if (req.x1 != req.x2) {
+        std::cout << "x1: " << req.x1 << '\n';
+        std::cout << "x2: " << req.x2 << "\n\n";
+    } else {
+        std::cout << "x: " << req.x2 << "\n\n";
+    }
+};
+        isEq.close();
+        std::cout<<"\n\n\n";
+
+     std::ifstream isExp("istoricExpresii.dat");
+        
+    std::cout<<"[Istoric Expresii]\n";
+while (isExp.read(reinterpret_cast<char*>(&rexpr), sizeof(Rezultat_expr))) {
+    std::cout << "Expresie: " << rexpr.expr << '\n';
+    std::cout << "Rezultat: "<< rexpr.res<<"\n\n";
+};
+        isExp.close();
+        
+        std::cout<<"\nPress Enter To Exit";
+        std::cin.get();
         return CodMeniuPrincipal;
     }
 //MENIU CITIRE CONSOLA
@@ -221,7 +276,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         calc->setExpr(buffer);
         calc->evalExpr();
         calc->printResult();
-
+        writeRes();
     delete[] buffer;
             MeniuCitireConsola::SaveResult();
         }
@@ -248,6 +303,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         calc->setExpr(buffer);
         calc->evalExpr();
         calc->printResult();
+        writeRes();
          delete[] buffer;
         if(calc->getErrorMessage()!="")
          {
@@ -255,8 +311,14 @@ void Meniu::bindCalculator(Calculator &calculator){
                 return 0;
         return CodCitireConsola;
          }
-         Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
+         char* temp=calc->getExpr();
+         
+         Rezfile<<"Expresie: "<<temp<<'\n';
+         
          Rezfile<<"Rezultat: ";
+         
+         if(temp)delete[] temp;
+         
          if(calc->getType())
          {
             if(calc->getSolutii().x1==calc->getSolutii().x2)
@@ -306,6 +368,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         calc->setExpr(buffer);
         calc->evalExpr();
         calc->printResult();
+        writeRes();
     delete[] buffer;
     if(calc->getErrorMessage()!="")
     {
@@ -328,6 +391,7 @@ void Meniu::bindCalculator(Calculator &calculator){
         calc->setExpr(buffer);
         calc->evalExpr();
         calc->printResult();
+        writeRes();
          delete[] buffer;
         if(calc->getErrorMessage()!="")
          {
@@ -335,8 +399,14 @@ void Meniu::bindCalculator(Calculator &calculator){
                 return 0;
         return CodCitireConsola;
          }
+         char* temp=calc->getExpr();
+
          Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
          Rezfile<<"Rezultat: ";
+
+         if(temp)delete []temp;
+
+         
          if(calc->getType())
          {
             if(calc->getSolutii().x1==calc->getSolutii().x2)
@@ -445,6 +515,7 @@ void Meniu::bindCalculator(Calculator &calculator){
             calc->setExpr(buffer);
             calc->evalExpr();
             calc->printResult();
+            writeRes();
             char a;
             std::cout<<"\nPress Enter to Continue.";
             std::cin.get();
@@ -464,14 +535,20 @@ void Meniu::bindCalculator(Calculator &calculator){
         {
         calc->setExpr(buffer);
         calc->evalExpr();
+        writeRes();
         if(calc->getErrorMessage()!="")
          {
         if(calc->getErrorMessage()=="Exiting program")
                 return 0;
         return CodCitireFisier;
          }
+         char *temp=calc->getExpr();
+        
          Rezfile<<"Expresie: "<<calc->getExpr()<<'\n';
          Rezfile<<"Rezultat: ";
+        
+         if(temp)delete[] temp;
+
          if(calc->getType())
          {
             if(calc->getSolutii().x1==calc->getSolutii().x2)

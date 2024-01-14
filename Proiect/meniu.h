@@ -16,6 +16,18 @@
 #define CodAfisareIstoric 400
 
 
+struct Rezultat_expr
+{
+    double res;
+    std::string expr;
+};
+
+struct Rezultat_eq
+{
+    double x1;
+    double x2;
+    std::string expr;
+};
 
 class Calculator;
 
@@ -25,6 +37,7 @@ public:
     virtual void Inapoi() = 0;
     virtual void SaveResult() = 0;  //aici sa vedem cum facem saveurile
     void bindCalculator(Calculator &calculator);
+    void writeRes();
 protected:
     std::string input;
     Calculator *calc=nullptr;
