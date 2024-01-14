@@ -4,6 +4,8 @@
 #include <cstring>
 #include <string>
 #include <fstream>
+#include <chrono>
+#include <thread>
 
 //folosit la reintoarcerea in meniu
 #define CodMeniuPrincipal 100
@@ -51,8 +53,8 @@ public:
     void Inapoi() override;
     int CitireConsola();
     int CitireFisier(); 
-    void FeelingLucky();
-    //void HiddenOption();
+    int FeelingLucky();
+    int HiddenOption();
     void SaveResult() override;
     int AfisareIstoric();
 };
