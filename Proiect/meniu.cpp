@@ -155,7 +155,7 @@ void Meniu::writeRes()
         std::ifstream isEq("istoricEcuatii.dat");
         std::cout<<"[Afisare Istoric]\n\n\n";
         std::cout<<"[Istoric Ecuatii]\n";
-
+    //
         Rezultat_eq req;
         Rezultat_expr rexpr;
 
