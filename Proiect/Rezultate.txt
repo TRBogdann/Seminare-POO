@@ -16,3 +16,6 @@ Rezultat: 6
 Expresie: 128/123+12-13.1
 Rezultat: -0.0593496
 
+Expresie: 1+23
+Rezultat: 24
+

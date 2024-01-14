@@ -21,14 +21,14 @@
 struct Rezultat_expr
 {
     double res;
-    std::string expr;
+    char expr[101];
 };
 
 struct Rezultat_eq
 {
     double x1;
     double x2;
-    std::string expr;
+    char expr[101];
 };
 
 class Calculator;

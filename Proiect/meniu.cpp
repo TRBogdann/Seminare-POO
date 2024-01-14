@@ -19,26 +19,28 @@ void Meniu::writeRes()
         return;
     if(calc->getType())
     {
+       if(strlen(calc->getExpr())<=100)
+        {  
         Rezultat_eq res;
-        char* temp=calc->getExpr();
-        res.expr=temp;
+        strcpy(res.expr,calc->getExpr());
         res.x1=calc->getSolutii().x1;
         res.x2=calc->getSolutii().x2;
         std::ofstream istoric("istoricEcuatii.dat");
         istoric.write(reinterpret_cast<char*>(&res),sizeof(Rezultat_eq));
-        delete[] temp;
         istoric.close();
+        }
     }
     else 
     {
+        if(strlen(calc->getExpr())<=100)
+        {
         Rezultat_expr res;
-        char* temp=calc->getExpr();
-        res.expr=temp;
+        strcpy(res.expr,calc->getExpr());
         res.res=calc->getResult();
         std::ofstream istoric("istoricExpresii.dat");
         istoric.write(reinterpret_cast<char*>(&res),sizeof(Rezultat_expr));
-        delete[] temp;
         istoric.close();
+        }
     }
 }
 
@@ -99,7 +101,7 @@ void Meniu::writeRes()
 
 
     int MeniuPrincipal::FeelingLucky(){
-        int r =     1 + rand() % 5;
+        int r = 1 + rand() % 5;
         switch(r){
             case 1:
                 return MeniuPrincipal::CitireConsola();
@@ -174,19 +176,6 @@ void Meniu::writeRes()
             }
         };
 
-          /*  while (isEq.read(reinterpret_cast<char*>(&req), sizeof(Rezultat_eq))) {
-                std::string equation;
-                equation.assign((char*)&req.expr[0], req.expr.size());
-
-                std::cout << "Equatie: " << equation << '\n';
-                if (req.x1 != req.x2) {
-                    std::cout << "x1: " << req.x1 << '\n';
-                    std::cout << "x2: " << req.x2 << "\n\n";
-                }
-                else {
-                    std::cout << "x: " << req.x2 << "\n\n";
-                }
-            };*/
 
 
         isEq.close();
@@ -282,7 +271,7 @@ void Meniu::writeRes()
                 if(MeniuCitireFisier::l!=nullptr)
                     delete[] MeniuCitireFisier::l;
                 MeniuCitireFisier::l = new char[strlen(y)+1];
-                strcpy_s(MeniuCitireFisier::l, strlen(y) + 1,y);
+                strcpy(MeniuCitireFisier::l,y);
             }
     }
 
@@ -300,11 +289,11 @@ void Meniu::writeRes()
         char *buffer=new char[calc->getBufferSize()+1];
 
         if(y!=nullptr){
-         strcpy_s(buffer, calc->getBufferSize() + 1,y);
+         strcpy(buffer,y);
          std::cout<<y;
         }
         else {
-         strcpy_s(buffer,1,"0");
+         strcpy(buffer,"0");
          std::cout<<'0';
         }
 
@@ -327,11 +316,11 @@ void Meniu::writeRes()
   char *buffer=new char[calc->getBufferSize()+1];
 
         if(y!=nullptr){
-         strcpy_s(buffer, calc->getBufferSize() + 1,y);
+         strcpy(buffer,y);
          std::cout<<y;
         }
         else {
-         strcpy_s(buffer, calc->getBufferSize() + 1,"0");
+         strcpy(buffer,"0");
          std::cout<<'0';
         }
 
@@ -641,7 +630,7 @@ void Meniu::writeRes()
                 if(MeniuCitireConsola::y!=nullptr)
                     delete[] MeniuCitireConsola::y;
                 MeniuCitireConsola::y = new char[strlen(l)+1];
-                strcpy_s(MeniuCitireConsola::y, strlen(l) + 1, l);
+                strcpy(MeniuCitireConsola::y, l);
             }
     }
 
