@@ -36,8 +36,8 @@ void setHandler(EquationHandler _handler);
 void setBufferSize(int buffer_Size);
 
 
-void setExpr(char *expr);
-void setChecker(Checker checker);
+virtual void setExpr(char *expr);
+virtual void setChecker(Checker checker);
 
 //Overload
 friend std::ostream& operator<<(std::ostream& os, const Calculator& c);
