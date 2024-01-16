@@ -287,3 +287,11 @@ bool Checker::checkIfEcuation(char *str){
 
     return type;
  }
+
+void Checker::virtuala1(){
+    std::cout<<1;
+};
+
+void Checker::virtuala2(){
+    std::cout<<2;
+};

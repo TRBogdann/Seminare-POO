@@ -23,11 +23,11 @@ public:
     ~Equation();
 //Getteri
     char getUnk();
-    double* getParams();
-    int getdegree();
+    virtual double* getParams();
+    virtual int getdegree();
 //Setteri
-    void setUnk(char Unk);
-    void setParams(double *_params);
+    virtual void setUnk(char Unk);
+    virtual void setParams(double *_params);
     void setDegree(int degree);
 //Overloads
     friend std::ostream& operator<<(std::ostream& os,const Equation& e);

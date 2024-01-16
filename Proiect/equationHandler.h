@@ -23,8 +23,8 @@ class EquationHandler
    void clearBuffer(unsigned int number=1);
 
 
-   void setEquation(char* equation);
-   void setBufferSize(unsigned int newBufferSize);
+   virtual void setEquation(char* equation);
+   virtual void setBufferSize(unsigned int newBufferSize);
    void setUnk(char unknown);
    void setSegment(int start,int end,unsigned int number=1);
    void setParanthesisBuffer(int buffer[6],unsigned int number=2);

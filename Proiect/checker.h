@@ -44,6 +44,9 @@ bool checkIfEcuation(char *str);
 
 char checkExpression(char *str);
 
+virtual void virtuala1();
+virtual void virtuala2();
+
 static bool checkCharacters(char *str);
 static bool isOperator(char c);
 static bool isParanthesis(char c);
